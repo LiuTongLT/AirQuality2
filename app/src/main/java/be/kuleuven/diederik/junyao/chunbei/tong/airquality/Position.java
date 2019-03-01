@@ -25,7 +25,8 @@ public class Position extends AppCompatActivity implements View.OnClickListener{
 
         switch (view.getId())
         {
-            case R.id.list_groupt: intent = new Intent(this,ReportGroupT.class); startActivity(intent); break;
+            case R.id.list_groupt: intent = new Intent(this,Report.class); startActivity(intent); break;
+            case R.id.list_agora: intent = new Intent(this,Report.class); startActivity(intent); break;
             default: break;
         }
     }

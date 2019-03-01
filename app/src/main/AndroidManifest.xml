@@ -33,7 +33,7 @@
         <activity android:name=".UserInfo" />
         <activity android:name=".SensorMap" />
         <activity android:name=".Position" />
-        <activity android:name=".ReportGroupT"></activity>
+        <activity android:name=".Report"></activity>
     </application>
 
 </manifest>
