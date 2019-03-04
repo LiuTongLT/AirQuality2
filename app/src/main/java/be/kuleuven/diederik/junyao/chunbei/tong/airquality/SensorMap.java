@@ -40,6 +40,7 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
     private Marker currentUserLocationMarker;
     private static final int Request_User_Location_Code = 99;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
