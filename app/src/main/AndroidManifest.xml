@@ -14,7 +14,7 @@
         android:value="@integer/google_play_services_version" />
     <meta-data
         android:name="com.google.android.geo.API_KEY"
-        android:value="AIzaSyCrml2-9vy6LQqo00LfZmPdE9660VGXz0g" />
+        android:value="AIzaSyBVWDI5huGlE3iS9SXyTz-tPb-A73ywhTg" />
 
     <application
         android:allowBackup="true"
@@ -38,14 +38,11 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCrml2-9vy6LQqo00LfZmPdE9660VGXz0g" />
-
+            android:value="AIzaSyBVWDI5huGlE3iS9SXyTz-tPb-A73ywhTg" />
         <activity
             android:name=".SensorMap"
             android:label="@string/title_activity_sensor_map" />
-        <activity
-            android:name=".TestMap"
-            android:label="@string/title_activity_test_map"></activity>
+
     </application>
 
 </manifest>

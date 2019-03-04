@@ -33,7 +33,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
         {
             case R.id.menu_out: intent = new Intent(this,Login.class); startActivity(intent); break;
             case R.id.menu_userinfo: intent = new Intent(this,UserInfo.class); startActivity(intent); break;
-            case R.id.menu_map: intent = new Intent(this, TestMap.class); startActivity(intent); break;
+            case R.id.menu_map: intent = new Intent(this, SensorMap.class); startActivity(intent); break;
             case R.id.menu_list: intent = new Intent(this,Position.class); startActivity(intent); break;
             default: break;
 
