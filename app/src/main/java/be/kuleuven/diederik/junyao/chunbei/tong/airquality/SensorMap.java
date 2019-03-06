@@ -40,16 +40,12 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
     private Marker currentUserLocationMarker;
     private static final int Request_User_Location_Code = 99;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensor_map);
 
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M)
-        {
-            checkUserLocationPermission();
-        }
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {checkUserLocationPermission();}
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -70,17 +66,11 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
     public boolean checkUserLocationPermission(){
         if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
             if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},Request_User_Location_Code);
-            }
-            else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},Request_User_Location_Code);
-            }
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},Request_User_Location_Code);}
+            else {ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},Request_User_Location_Code);}
             return false;
         }
-        else{
-            return true;
-        }
-
+        else{return true;}
     }
 
     @Override
@@ -89,15 +79,11 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
             case Request_User_Location_Code:
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
-                        if(googleApiClient==null){
-                            buildGoogleApiClient();
-                        }
+                        if(googleApiClient==null){buildGoogleApiClient();}
                         mMap.setMyLocationEnabled(true);
                     }
                 }
-                else{
-                    Toast.makeText(this,"Permission Denied...",Toast.LENGTH_SHORT).show();
-                }
+                else{Toast.makeText(this,"Permission Denied...",Toast.LENGTH_SHORT).show();}
         }
 
     }
@@ -113,12 +99,10 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
     }
 
     @Override
-    public void onLocationChanged(Location location) {
+    public void onLocationChanged(Location location){
         lastLocation = location;
 
-        if(currentUserLocationMarker !=null){
-            currentUserLocationMarker.remove();
-        }
+        if(currentUserLocationMarker !=null){currentUserLocationMarker.remove();}
 
         LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
@@ -131,9 +115,7 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomBy(12));
 
-        if(googleApiClient!=null){
-            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,this);
-        }
+        if(googleApiClient!=null){LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,this);}
     }
 
     @Override
@@ -143,14 +125,12 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
         locationRequest.setFastestInterval(1100);
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
-        if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
-            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
-        }
+        if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);}
     }
 
     @Override
-    public void onConnectionSuspended(int i) {}
+    public void onConnectionSuspended(int i){}
 
     @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {}
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult){}
 }
