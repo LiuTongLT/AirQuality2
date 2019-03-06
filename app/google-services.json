@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "268404740443",
+    "firebase_url": "https://airquality-233508.firebaseio.com",
+    "project_id": "airquality-233508",
+    "storage_bucket": "airquality-233508.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:268404740443:android:3ddf123f11a42910",
+        "android_client_info": {
+          "package_name": "be.kuleuven.diederik.junyao.chunbei.tong.airquality"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "268404740443-vklijd6dp1in6r45a8khn2evpfvfp2bt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "be.kuleuven.diederik.junyao.chunbei.tong.airquality",
+            "certificate_hash": "8531f183cdbef217cc11a1f1a8a3e72d9a8c1845"
+          }
+        },
+        {
+          "client_id": "268404740443-s9cohk5ph2d3ufhk9qt19l2g6r148a2k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlaZcn_wSFbQUkJx4IwyB-qyqBl573eAc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "268404740443-s9cohk5ph2d3ufhk9qt19l2g6r148a2k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

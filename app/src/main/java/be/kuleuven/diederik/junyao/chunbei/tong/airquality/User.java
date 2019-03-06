@@ -16,6 +16,10 @@ public class User implements Serializable{
         this.password=password;
     }
 
+    public User(String email){
+        this.mailAddress = email;
+    }
+
     public String getFirstName() {return firstName;}
     public void setFirstName(String firstName) {this.firstName = firstName;}
     public String getLastName() {return lastName;}

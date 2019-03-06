@@ -7,6 +7,7 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 
 public class Menu extends AppCompatActivity implements View.OnClickListener{
+
     private CardView mapMenu, listMenu, userInfoMenu, signOutMenu;
 
     @Override

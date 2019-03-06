@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="be.kuleuven.diederik.junyao.chunbei.tong.airquality">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -8,6 +9,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+
 
     <meta-data
         android:name="com.google.android.gms.version"
@@ -36,13 +38,15 @@
         <activity android:name=".Position" />
         <activity android:name=".Report" />
 
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBVWDI5huGlE3iS9SXyTz-tPb-A73ywhTg" />
+
         <activity
             android:name=".SensorMap"
-            android:label="@string/title_activity_sensor_map" />
-
+            android:label="@string/title_activity_map" />
     </application>
 
 </manifest>
