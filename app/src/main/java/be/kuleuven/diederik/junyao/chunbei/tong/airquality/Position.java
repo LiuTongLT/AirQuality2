@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 public class Position extends AppCompatActivity implements View.OnClickListener{
+
     private TextView groupt;
 
     @Override
