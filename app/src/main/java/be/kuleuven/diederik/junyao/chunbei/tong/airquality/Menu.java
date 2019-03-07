@@ -16,6 +16,9 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        Intent intent = getIntent();
+        user = (User) intent.getSerializableExtra("user");
+
         mapMenu = (CardView) findViewById(R.id.menu_map);
         listMenu = (CardView) findViewById(R.id.menu_list);
         userInfoMenu = (CardView) findViewById(R.id.menu_userinfo);
@@ -34,7 +37,11 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
         switch (view.getId())
         {
             case R.id.menu_out: intent = new Intent(this,Login.class); startActivity(intent); break;
-            case R.id.menu_userinfo: intent = new Intent(this,UserInfo.class); startActivity(intent); break;
+            case R.id.menu_userinfo:
+                intent = new Intent(this,UserInfo.class);
+                intent.putExtra("user",user);
+                startActivity(intent);
+                break;
             case R.id.menu_map: intent = new Intent(this, SensorMap.class); startActivity(intent); break;
             case R.id.menu_list: intent = new Intent(this,Position.class); startActivity(intent); break;
             default: break;

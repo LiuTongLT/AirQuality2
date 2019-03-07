@@ -25,8 +25,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private boolean correct;
     private Button login;
     private TextView signUp;
-    private String user1;
     private User user;
+
 
     private static final String TAG = "Login";
 
@@ -99,6 +99,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             }
                             if (correct) {
                                 Intent intent = new Intent(getApplicationContext(), Menu.class);
+                                intent.putExtra("user",user);
                                 startActivity(intent);
                             } else {
                                 Toast.makeText(Login.this, "Please check your email and password.", Toast.LENGTH_SHORT).show();

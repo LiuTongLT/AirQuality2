@@ -54,6 +54,35 @@
                     android:textColor="#ff000000" />
 
                 <TextView
+                    android:id="@+id/info_firstname"
+                    android:drawableStart="@drawable/ic_person_black_24dp"
+                    android:textStyle="italic"
+                    android:textColorHint="#ff000000"
+                    android:background="@color/colorPrimary"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center"
+                    android:hint=" Firstname"
+                    android:padding="10dp"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_email_black_24dp" />
+
+                <TextView
+                    android:id="@+id/info_lastname"
+                    android:drawableStart="@drawable/ic_person_black_24dp"
+                    android:textStyle="italic"
+                    android:textColorHint="#ff000000"
+                    android:background="@color/colorPrimary"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center"
+                    android:hint=" Lastname"
+                    android:padding="10dp"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_email_black_24dp" />
+
+                <TextView
+                    android:id="@+id/info_email"
                     android:drawableStart="@drawable/ic_email_black_24dp"
                     android:textStyle="italic"
                     android:textColorHint="#ff000000"
@@ -66,18 +95,6 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_email_black_24dp" />
 
-                <TextView
-                    android:drawableStart="@drawable/ic_vpn_key_black_24dp"
-                    android:textStyle="italic"
-                    android:textColorHint="#ff000000"
-                    android:background="@color/colorPrimary"
-                    android:layout_marginTop="20dp"
-                    android:layout_gravity="center"
-                    android:hint="User Email"
-                    android:padding="10dp"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_email_black_24dp" />
 
 
             </LinearLayout>
