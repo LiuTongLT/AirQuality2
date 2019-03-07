@@ -14,10 +14,13 @@ public class Data implements Serializable{
     public Data(){}
 
     public void addUser(User user)throws AlreadyAddedException{
-        if(users.contains(user)){
-            throw new AlreadyAddedException();}
-        else{
-            users.add(user);}
+        try{
+            getUserByMailAddress(user.getMailAddress(),false);
+            throw new AlreadyAddedException();
+        }
+        catch (NotInListException N){
+            users.add(user);
+        }
     }
 
     public User getUserByMailAddress(String mailAddress, boolean remove)throws NotInListException{

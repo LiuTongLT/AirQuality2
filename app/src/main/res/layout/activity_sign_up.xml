@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,42 +10,101 @@
 
     <android.support.v7.widget.CardView
 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_margin="35dp"
-        app:cardCornerRadius="4dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:layout_marginTop="15dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sign Up"
-            android:textStyle="italic"
-            android:textSize="30sp"
-            android:textColor="#ff000000" />
+        app:cardCornerRadius="4dp">
 
-        <EditText
-            android:background="@drawable/edittextstyles"
-            android:hint="Email"
-            android:textStyle="italic"
-            android:layout_marginTop="100dp"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"/>
 
-        <Button
-            android:layout_marginTop="80dp"
-            android:background="@drawable/buttonstyles"
-            android:text="SIGN UP"
-            android:textStyle="italic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"/>
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:text="Sign Up"
+                android:textColor="#ff000000"
+                android:textSize="30sp"
+                android:textStyle="italic" />
+
+            <EditText
+                android:id="@+id/sign_up_firstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/edittextstyles"
+                android:hint="First Name"
+                android:textStyle="italic" />
+
+            <EditText
+                android:id="@+id/sign_up_lastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edittextstyles"
+                android:hint="Last Name"
+                android:textStyle="italic" />
+
+            <EditText
+                android:id="@+id/sign_up_eMailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edittextstyles"
+                android:hint="Email"
+                android:textStyle="italic" />
+
+            <EditText
+                android:id="@+id/sign_up_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edittextstyles"
+                android:ems="10"
+                android:hint="Password" />
+
+            <EditText
+                android:id="@+id/sign_up_repeatPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edittextstyles"
+                android:ems="10"
+                android:hint="Repeat Password" />
+
+            <Button
+                android:id="@+id/sign_up_signUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/buttonstyles"
+                android:text="SIGN UP"
+                android:textStyle="italic" />
+
+            <Button
+                android:id="@+id/sign_up_goBack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/buttonstyles"
+                android:text="GO BACK"
+                android:textStyle="italic" />
+
+        </LinearLayout>
     </android.support.v7.widget.CardView>
 
-</LinearLayout>
+</ScrollView>

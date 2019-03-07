@@ -30,6 +30,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "Login";
 
+    Data data = new Data();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         signUp = (TextView) findViewById(R.id.signup_login);
         signUp.setOnClickListener(this);
 
+        Intent intent = getIntent();
+        data=(Data)intent.getSerializableExtra("data");
     }
 
     @Override
