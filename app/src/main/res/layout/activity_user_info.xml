@@ -13,7 +13,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="225dp"
+            android:layout_height="150dp"
             android:background="@color/colorPrimary">
 
             <ImageView
@@ -29,7 +29,7 @@
                 android:textColor="#ff000000"
                 android:textStyle="italic"
                 android:textColorHighlight="#ff000000"
-                android:textSize="40sp"/>
+                android:textSize="35sp"/>
 
         </LinearLayout>
 
@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <TextView
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -58,7 +58,20 @@
                     android:textStyle="italic"
                     android:textColorHint="#ff000000"
                     android:background="@color/colorPrimary"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center"
+                    android:hint="User Email"
+                    android:padding="10dp"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_email_black_24dp" />
+
+                <TextView
+                    android:drawableStart="@drawable/ic_vpn_key_black_24dp"
+                    android:textStyle="italic"
+                    android:textColorHint="#ff000000"
+                    android:background="@color/colorPrimary"
+                    android:layout_marginTop="20dp"
                     android:layout_gravity="center"
                     android:hint="User Email"
                     android:padding="10dp"

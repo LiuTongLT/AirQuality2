@@ -9,6 +9,7 @@ import android.view.View;
 public class Menu extends AppCompatActivity implements View.OnClickListener{
 
     private CardView mapMenu, listMenu, userInfoMenu, signOutMenu;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

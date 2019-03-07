@@ -40,14 +40,30 @@
             android:layout_height="match_parent">
 
             <EditText
+                android:id="@+id/user_email"
                 android:drawableStart="@drawable/ic_email_black_24dp"
                 android:textStyle="italic"
                 android:textColorHint="#ff000000"
                 android:background="@color/colorPrimary"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="40dp"
                 android:layout_gravity="center"
-                android:hint="User Email"
+                android:hint=" Email"
                 android:padding="10dp"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_email_black_24dp" />
+
+            <EditText
+                android:id="@+id/user_password"
+                android:drawableStart="@drawable/ic_vpn_key_black_24dp"
+                android:textStyle="italic"
+                android:textColorHint="#ff000000"
+                android:background="@color/colorPrimary"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:hint=" Password"
+                android:padding="10dp"
+                android:inputType="textPassword"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_email_black_24dp" />

@@ -3,9 +3,9 @@ package be.kuleuven.diederik.junyao.chunbei.tong.airquality;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
+//import com.jjoe64.graphview.GraphView;
+//import com.jjoe64.graphview.series.DataPoint;
+//import com.jjoe64.graphview.series.LineGraphSeries;
 
 public class Report extends AppCompatActivity {
 
@@ -14,7 +14,7 @@ public class Report extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
 
-        GraphView graph = (GraphView) findViewById(R.id.graph);
+        /*GraphView graph = (GraphView) findViewById(R.id.graph);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
                 new DataPoint(0, 1),
                 new DataPoint(1, 5),
@@ -22,6 +22,6 @@ public class Report extends AppCompatActivity {
                 new DataPoint(3, 2),
                 new DataPoint(4, 6)
         });
-        graph.addSeries(series);
+        graph.addSeries(series);*/
     }
 }
