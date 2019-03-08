@@ -70,7 +70,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     private void getUsersFromDatabase() {
         RequestQueue queue1 = Volley.newRequestQueue(getApplicationContext());
-        String url = "https://a18ee5air2.studev.groept.be/read.php";
+        String url = "https://a18ee5air2.studev.groept.be/query/read.php";
 
 
         final TextView email = findViewById(R.id.user_email);
