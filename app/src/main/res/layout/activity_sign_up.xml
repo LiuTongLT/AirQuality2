@@ -71,7 +71,8 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/edittextstyles"
                 android:ems="10"
-                android:hint="Password" />
+                android:hint="Password"
+                android:inputType="textPassword"/>
 
             <EditText
                 android:id="@+id/sign_up_repeatPassword"
@@ -81,27 +82,28 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/edittextstyles"
                 android:ems="10"
-                android:hint="Repeat Password" />
+                android:hint="Repeat Password"
+                android:inputType="textPassword"/>
 
             <Button
-                android:id="@+id/sign_up_signUp"
+                android:id="@+id/sign_up_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/buttonstyles"
-                android:text="SIGN UP"
+                android:text="CHECK&amp;CONFIRM"
                 android:textStyle="italic" />
 
             <Button
-                android:id="@+id/sign_up_goBack"
+                android:id="@+id/sign_up"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="30dp"
                 android:background="@drawable/buttonstyles"
-                android:text="GO BACK"
+                android:text="SIGN UP"
                 android:textStyle="italic" />
 
         </LinearLayout>

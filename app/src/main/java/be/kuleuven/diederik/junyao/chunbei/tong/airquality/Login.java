@@ -41,7 +41,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             login = (Button) findViewById(R.id.button_login);
             login.setOnClickListener(this);
         }
-        getUsersFromDatabase();
+        //getUsersFromDatabase();
 
 
         signUp = (TextView) findViewById(R.id.signup_login);
@@ -70,7 +70,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     private void getUsersFromDatabase() {
         RequestQueue queue1 = Volley.newRequestQueue(getApplicationContext());
-        String url = "https://a18ee5air2.studev.groept.be/query/read.php";
+        String url = "https://a18ee5air2.studev.groept.be/query/readUser.php";
 
 
         final TextView email = findViewById(R.id.user_email);
@@ -116,8 +116,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 error.printStackTrace();
             }
         });
-
-
         queue1.add(stringRequest);
         correct = false;
 
