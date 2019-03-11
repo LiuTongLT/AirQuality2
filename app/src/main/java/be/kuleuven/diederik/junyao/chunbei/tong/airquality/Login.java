@@ -41,7 +41,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             login = (Button) findViewById(R.id.button_login);
             login.setOnClickListener(this);
         }
-        //getUsersFromDatabase();
 
 
         signUp = (TextView) findViewById(R.id.signup_login);
