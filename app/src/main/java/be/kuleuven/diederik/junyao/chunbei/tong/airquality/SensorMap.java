@@ -1,6 +1,7 @@
 package be.kuleuven.diederik.junyao.chunbei.tong.airquality;
 
         import android.Manifest;
+        import android.content.Intent;
         import android.content.pm.PackageManager;
         import android.graphics.Color;
         import android.location.Location;
@@ -11,6 +12,8 @@ package be.kuleuven.diederik.junyao.chunbei.tong.airquality;
         import android.support.v4.app.ActivityCompat;
         import android.support.v4.app.FragmentActivity;
         import android.support.v4.content.ContextCompat;
+        import android.view.View;
+        import android.widget.Button;
         import android.widget.Toast;
 
         import com.google.android.gms.common.ConnectionResult;
@@ -37,7 +40,7 @@ package be.kuleuven.diederik.junyao.chunbei.tong.airquality;
 public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener{
+        LocationListener, View.OnClickListener {
 
     private GoogleMap mMap;
     private GoogleApiClient googleApiClient;
@@ -49,6 +52,10 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
     private ArrayList markers = new ArrayList<Marker>();
     private Data data = new Data();
     private Marker marker;
+    private Button getReport;
+    private Button goBack;
+    private Sensor sensorOfMarker;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +68,9 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        Intent intent = getIntent();
+        data = (Data) intent.getSerializableExtra("data");
+        user = (User) intent.getSerializableExtra("user");
         //temporally added like this, in the future with database
         try{
             data.addSensor(new Sensor(1,50.874780, 4.707391,"GroepT"));
@@ -68,9 +78,16 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
             data.addSensor(new Sensor(3,50.875882, 4.707917,"Alma1"));
             data.addSensor(new Sensor(4,50.875222, 4.709558,"Spar"));
             data.addSensor(new Sensor(5,50.877863, 4.704656,"College De Valk"));
-
         }
         catch(AlreadyAddedException A){}
+
+        goBack = findViewById(R.id.sensor_map_goBack);
+        getReport = findViewById(R.id.sensor_map_getReport);
+
+        getReport.setOnClickListener(this);
+        goBack.setOnClickListener(this);
+        getReport.setVisibility(View.INVISIBLE);
+
     }
 
     @Override
@@ -81,6 +98,47 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
             return;
+        }
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                getReport.setVisibility(View.VISIBLE);
+                sensorOfMarker = (Sensor) marker.getTag();
+                return false;
+            }
+        });
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                getReport.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.sensor_map_goBack:
+                Intent intent1 = new Intent (SensorMap.this, Menu.class);
+                intent1.putExtra("data", data);
+                intent1.putExtra("user", user);
+                startActivity(intent1);
+                finish();
+                break;
+            case R.id.sensor_map_getReport:
+                Intent intent2 = new Intent (SensorMap.this, Report.class);
+                intent2.putExtra("data", data);
+                intent2.putExtra("user", user);
+                intent2.putExtra("sensor", sensorOfMarker);
+                startActivity(intent2);
+                finish();
+                break;
+
+            default:
+                break;
+
         }
     }
 
@@ -173,6 +231,7 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
                 markerOptions.snippet("Location: " + currentSensor.getLocation());
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                 marker = mMap.addMarker(markerOptions);
+                marker.setTag(currentSensor);
                 markers.add(marker);
             }
         }
@@ -203,6 +262,7 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult){}
+
 }
 
 

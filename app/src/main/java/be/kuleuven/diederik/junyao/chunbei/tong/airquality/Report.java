@@ -11,9 +11,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
+//import com.jjoe64.graphview.GraphView;
+//import com.jjoe64.graphview.series.DataPoint;
+//import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,7 +23,7 @@ import java.util.Date;
 
 public class Report extends AppCompatActivity {
     private String location;
-    private LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
+    //private LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
