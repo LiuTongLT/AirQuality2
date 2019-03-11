@@ -9,7 +9,7 @@ public class Sensor implements Serializable{
     double ycoordinate;
     String location;
 
-    public Sensor(int sensorId, double xcoordinate, double ycoordinate, String location, int houseNumber) {
+    public Sensor(int sensorId, double xcoordinate, double ycoordinate, String location) {
         this.sensorId = sensorId;
         this.xcoordinate = xcoordinate;
         this.ycoordinate = ycoordinate;
@@ -23,5 +23,5 @@ public class Sensor implements Serializable{
     public double getYcoordinate() {return ycoordinate;}
     public void setYcoordinate(double ycoordinate) {this.ycoordinate = ycoordinate;}
     public String getLocation() {return location;}
-    public void setStreetName(String location) {this.location = location;}
+    public void setLocation(String location) {this.location = location;}
 }

@@ -78,15 +78,10 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
             && firstName_1.length()>0
             && lastName_1.length()>0
             && eMailAddress_1.contains("@")){
-            
-            try{
-                data.addUser(new User(firstName_1,lastName_1,eMailAddress_1,password_1));
-                Toast.makeText(this, "Signed Up successfully!",Toast.LENGTH_SHORT).show();
-                changeActivity();
-            }
-            catch (AlreadyAddedException a){
-                Toast.makeText(this, "This eMailaddress is already in use. Try another one!",Toast.LENGTH_SHORT).show();
-            }
+
+            //add user to database and check if it's already in the database.
+            changeActivity(); //when successful
+
         }
         else{
             Toast.makeText(this, "Something went wrong. Try Again!",Toast.LENGTH_SHORT).show();
