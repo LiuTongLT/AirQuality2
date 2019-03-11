@@ -34,10 +34,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     EditText repeatPassword;
     Data data = new Data();
 
-    Object lock = new Object();
-
     private boolean exist = false;
-    private boolean check = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
