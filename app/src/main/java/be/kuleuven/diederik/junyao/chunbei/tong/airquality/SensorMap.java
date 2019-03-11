@@ -68,6 +68,7 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
             data.addSensor(new Sensor(3,50.875882, 4.707917,"Alma1"));
             data.addSensor(new Sensor(4,50.875222, 4.709558,"Spar"));
             data.addSensor(new Sensor(5,50.877863, 4.704656,"College De Valk"));
+
         }
         catch(AlreadyAddedException A){}
     }
