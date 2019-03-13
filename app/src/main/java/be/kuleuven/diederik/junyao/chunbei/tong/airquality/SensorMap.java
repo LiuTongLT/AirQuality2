@@ -16,6 +16,12 @@ package be.kuleuven.diederik.junyao.chunbei.tong.airquality;
         import android.widget.Button;
         import android.widget.Toast;
 
+        import com.android.volley.Request;
+        import com.android.volley.RequestQueue;
+        import com.android.volley.Response;
+        import com.android.volley.VolleyError;
+        import com.android.volley.toolbox.StringRequest;
+        import com.android.volley.toolbox.Volley;
         import com.google.android.gms.common.ConnectionResult;
         import com.google.android.gms.common.api.GoogleApiClient;
         import com.google.android.gms.location.LocationListener;
@@ -34,6 +40,12 @@ package be.kuleuven.diederik.junyao.chunbei.tong.airquality;
         import com.google.android.gms.maps.model.Marker;
         import com.google.android.gms.maps.model.MarkerOptions;
 
+        import org.json.JSONArray;
+        import org.json.JSONException;
+        import org.json.JSONObject;
+
+        import java.text.ParseException;
+        import java.text.SimpleDateFormat;
         import java.util.ArrayList;
         import java.util.Date;
         import java.util.Iterator;
@@ -196,6 +208,45 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
         addSensors();
     }
 
+    private double[] getCurrentValue(String location){
+        final String loc=location;
+        final double[] values=new double[2];
+        String url = "https://a18ee5air2.studev.groept.be/query/readCurrent.php?location=" + location;
+        RequestQueue queue = Volley.newRequestQueue(SensorMap.this);
+
+        System.out.println("Get CurrentValue starts");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            System.out.println("Into response!");
+                            JSONArray jarr = new JSONArray(response);
+                            for (int i = 0; i < jarr.length(); i++) {
+                                JSONObject jobj = jarr.getJSONObject(i);
+                                double currentPM = jobj.getDouble("valuePM");
+                                double currentCo=jobj.getDouble("valueCO");
+                                values[0]=currentPM;
+                                values[1]=currentCo;
+                            }
+                            System.out.println("End of response!");
+
+                        } catch (JSONException e) {
+                            System.out.println(e);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(SensorMap.this, "Error...", Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
+            }
+        });
+        queue.add(stringRequest);
+        return values;
+    }
+
     private void addSensors(){
 
         ArrayList<Sensor> sensors = new ArrayList<>();
@@ -216,8 +267,10 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
 
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(latlng);
-                markerOptions.title("SensorID: " + Integer.toString(currentSensor.getSensorId()));
-                markerOptions.snippet("Location: " + currentSensor.getLocation());
+                String pmValue=Double.toString(getCurrentValue(currentSensor.getLocation())[0]);
+                String coValue=Double.toString(getCurrentValue(currentSensor.getLocation())[1]);
+                markerOptions.title("Location: " + currentSensor.getLocation());
+                markerOptions.snippet("PM value: " + Double.toString(getCurrentValue(currentSensor.getLocation())[0])+", CO value: " +Double.toString(getCurrentValue(currentSensor.getLocation())[1]));
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                 marker = mMap.addMarker(markerOptions);
                 marker.setTag(currentSensor);
