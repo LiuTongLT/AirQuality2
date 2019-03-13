@@ -31,11 +31,10 @@ import java.util.Date;
 public class Position extends AppCompatActivity implements View.OnClickListener{
 
     private TextView groupt;
+    private TextView back;
 
-    Date today = new Date();
-
-    private ArrayList<DataPoint> seriesPMGT = new ArrayList<>();
-    private ArrayList<DataPoint> seriesCOGT = new ArrayList<>();
+    private Data data;
+    private User user;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -43,13 +42,14 @@ public class Position extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_position);
 
+        Intent intent = getIntent();
+        data = (Data) intent.getSerializableExtra("data");
+        user = (User) intent.getSerializableExtra("user");
 
-
-        seriesPMGT = getData("groupt")[0];
-        seriesCOGT = getData("groupt")[1];
-
+        back = (TextView) findViewById(R.id.position_back);
         groupt = (TextView) findViewById(R.id.list_groupt);
         groupt.setOnClickListener(this);
+        back.setOnClickListener(this);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -61,82 +61,23 @@ public class Position extends AppCompatActivity implements View.OnClickListener{
         {
             case R.id.list_groupt:
                 intent = new Intent(this,Report.class);
-                intent.putExtra("PM array",seriesPMGT);
-                intent.putExtra("CO array", seriesCOGT);
+                intent.putExtra("data",data);
+                intent.putExtra("user", user);
+                intent.putExtra("location","groupt");
                 startActivity(intent);
                 break;
             case R.id.list_agora:
                 intent = new Intent(this,Report.class);
+                intent.putExtra("data",data);
+                intent.putExtra("user", user);
                 intent.putExtra("location","agora");
                 startActivity(intent);
                 break;
+            case R.id.position_back:
+                intent = new Intent(this,Menu.class);
+                startActivity(intent);
             default: break;
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public ArrayList[] getData(String location) {
-
-        final String loc = location;
-        final ArrayList[] series = new ArrayList[2];
-        final ArrayList<DataPoint> seriespm = new ArrayList<>();
-        final ArrayList<DataPoint> seriesco = new ArrayList<>();
-
-        String url = "https://a18ee5air2.studev.groept.be/query/avgWeek.php?location=" + location;
-        RequestQueue queue = Volley.newRequestQueue(Position.this);
-
-//        LocalDateTime localToday = LocalDateTime.ofInstant(today.toInstant(), ZoneId.systemDefault());
-//        final int dayOfToday = localToday.getDayOfMonth();
-//        System.out.println("Day of today: " + dayOfToday);
-
-        System.out.println("Get data starts");
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            System.out.println("Into response!");
-                            JSONArray jarr = new JSONArray(response);
-                            for (int i = 0; i < jarr.length(); i++) {
-                                JSONObject jobj = jarr.getJSONObject(i);
-                                String day = jobj.getString("days");
-                                Date date = new SimpleDateFormat("yyyy-MM-dd").parse(day);
-                                Double pm_value = jobj.getDouble("avg_pm");
-                                Double co_value = jobj.getDouble("avg_CO");
-
-                                int dayOfDate = (int) (day.charAt(8) - '0') * 10 + (int) (day.charAt(9) - '0');
-
-                                DataPoint dataPointPM = new DataPoint(dayOfDate, pm_value);
-                                seriespm.add(dataPointPM);
-
-                                DataPoint dataPointCO = new DataPoint(dayOfDate, co_value);
-                                seriesco.add(dataPointCO);
-
-                                System.out.println("Date: " + date);
-                                System.out.println("Day: " + date.getDay());
-                                System.out.println("PM: " + pm_value);
-                                System.out.println("CO: " + co_value);
-                                System.out.println("Day of date: " + dayOfDate);
-                            }
-                            System.out.println("End of response!");
-                        } catch (JSONException e) {
-                            System.out.println(e);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Position.this, "Error...", Toast.LENGTH_SHORT).show();
-                error.printStackTrace();
-            }
-        });
-        queue.add(stringRequest);
-        series[0] = seriespm;
-        series[1] = seriesco;
-        return series;
-    }
 }
