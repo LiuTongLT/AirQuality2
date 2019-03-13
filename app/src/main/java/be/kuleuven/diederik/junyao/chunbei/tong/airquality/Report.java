@@ -21,11 +21,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.lang.*;
 
@@ -44,8 +48,18 @@ public class Report extends AppCompatActivity {
         Intent intent = getIntent();
         data=(Data) intent.getSerializableExtra("data");
         sensor =(Sensor) intent.getSerializableExtra("sensor");
-        try{measurements=data.getMeasurementsByLocation(sensor.getLocation());}
+        try{
+            measurements=data.getMeasurementsByLocation(sensor.getLocation());
+            Collections.sort(measurements, new Comparator<Measurement>() {
+                @Override
+                public int compare(Measurement m1, Measurement m2) {
+                    return (m1.getDay()-m2.getDay());
+                }
+            });
+        }
         catch(EmptyListException E){}
+
+
 
         if(measurements.size()!=0){
             DataPoint[] pm = new DataPoint[measurements.size()];

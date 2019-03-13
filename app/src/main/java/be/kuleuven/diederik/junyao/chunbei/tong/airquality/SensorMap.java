@@ -71,6 +71,7 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
 
         Intent intent = getIntent();
         data = (Data) intent.getSerializableExtra("data");
+        //System.out.println("Sensors: "+data.getSensors());
         user = (User) intent.getSerializableExtra("user");
 
         goBack = findViewById(R.id.sensor_map_goBack);
@@ -197,7 +198,8 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
 
     private void addSensors(){
 
-        ArrayList sensors = data.getSensors();
+        ArrayList<Sensor> sensors = new ArrayList<>();
+        sensors = data.getSensors();
         if(!sensors.isEmpty()){
             Iterator<Sensor> it = sensors.iterator();
             while(it.hasNext()){

@@ -43,6 +43,8 @@ public class Position extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_position);
 
+
+
         seriesPMGT = getData("groupt")[0];
         seriesCOGT = getData("groupt")[1];
 
@@ -75,7 +77,7 @@ public class Position extends AppCompatActivity implements View.OnClickListener{
     @RequiresApi(api = Build.VERSION_CODES.O)
     public ArrayList[] getData(String location) {
 
-        final String loc=location;
+        final String loc = location;
         final ArrayList[] series = new ArrayList[2];
         final ArrayList<DataPoint> seriespm = new ArrayList<>();
         final ArrayList<DataPoint> seriesco = new ArrayList<>();
@@ -83,9 +85,9 @@ public class Position extends AppCompatActivity implements View.OnClickListener{
         String url = "https://a18ee5air2.studev.groept.be/query/avgWeek.php?location=" + location;
         RequestQueue queue = Volley.newRequestQueue(Position.this);
 
-        /*LocalDateTime localToday = LocalDateTime.ofInstant(today.toInstant(), ZoneId.systemDefault());
-        final int dayOfToday = localToday.getDayOfMonth();
-        System.out.println("Day of today: " + dayOfToday);*/
+//        LocalDateTime localToday = LocalDateTime.ofInstant(today.toInstant(), ZoneId.systemDefault());
+//        final int dayOfToday = localToday.getDayOfMonth();
+//        System.out.println("Day of today: " + dayOfToday);
 
         System.out.println("Get data starts");
 
@@ -102,11 +104,6 @@ public class Position extends AppCompatActivity implements View.OnClickListener{
                                 Date date = new SimpleDateFormat("yyyy-MM-dd").parse(day);
                                 Double pm_value = jobj.getDouble("avg_pm");
                                 Double co_value = jobj.getDouble("avg_CO");
-                                /*
-                                Data data = new Data();
-                                try{
-                                data.addMeasurement(new Measurement(co_value,pm_value,date,loc));}
-                                catch(AlreadyAddedException A){}*/
 
                                 int dayOfDate = (int) (day.charAt(8) - '0') * 10 + (int) (day.charAt(9) - '0');
 
@@ -117,6 +114,7 @@ public class Position extends AppCompatActivity implements View.OnClickListener{
                                 seriesco.add(dataPointCO);
 
                                 System.out.println("Date: " + date);
+                                System.out.println("Day: " + date.getDay());
                                 System.out.println("PM: " + pm_value);
                                 System.out.println("CO: " + co_value);
                                 System.out.println("Day of date: " + dayOfDate);
