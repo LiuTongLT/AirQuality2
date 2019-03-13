@@ -8,13 +8,13 @@ public class Measurement implements Serializable{
     double coValue;
     double pmValue;
     Date date;
-    int sensorId;
+    String location;
 
-    public Measurement(double coValue, double pmValue, Date date, int sensorId){
+    public Measurement(double coValue, double pmValue, Date date, String location){
         this.coValue=coValue;
         this.pmValue=pmValue;
         this.date=date;
-        this.sensorId=sensorId;
+        this.location=location;
     }
 
     public double getCoValue() {return coValue;}
@@ -30,6 +30,6 @@ public class Measurement implements Serializable{
     public int getMonth(){return date.getMonth();}
     public int getYear(){return date.getYear();}
 
-    public int getSensorId() {return sensorId;}
-    public void setSensorId(int sensorId) {this.sensorId = sensorId;}
+    public String getLocation() {return location;}
+    public void setLocation(int sensorId) {this.location = location;}
 }

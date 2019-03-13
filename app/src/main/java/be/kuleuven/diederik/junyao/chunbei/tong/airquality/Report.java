@@ -33,6 +33,7 @@ public class Report extends AppCompatActivity {
 
     private ArrayList<DataPoint> seriesPM = new ArrayList<>();
     private ArrayList<DataPoint> seriesCO = new ArrayList<>();
+    Data data = new Data();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -69,5 +70,6 @@ public class Report extends AppCompatActivity {
             LineGraphSeries<DataPoint> series = new LineGraphSeries<>(co);
             graph.addSeries(series);
         }
+
     }
 }

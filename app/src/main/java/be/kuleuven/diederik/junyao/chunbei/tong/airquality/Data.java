@@ -34,12 +34,12 @@ public class Data implements Serializable{
         }
     }
 
-    public ArrayList getMeasurementsByTimeInterval(int sensorId, Date beginDate, Date endDate)throws EmptyListException{
+    public ArrayList getMeasurementsByTimeInterval(String location, Date beginDate, Date endDate)throws EmptyListException{
         ArrayList measurementsByTimeInterval = new ArrayList<Measurement>();
         Iterator<Measurement> it = measurements.iterator();
         while(it.hasNext()){
             Measurement currentMeasurement = it.next();
-            if(currentMeasurement.getSensorId()==sensorId && currentMeasurement.getDate().after(beginDate) && currentMeasurement.getDate().before(endDate)){
+            if(currentMeasurement.getLocation().equals(location) && currentMeasurement.getDate().after(beginDate) && currentMeasurement.getDate().before(endDate)){
                 measurementsByTimeInterval.add(currentMeasurement);}
         }
         if(measurementsByTimeInterval.isEmpty()){throw new EmptyListException();}
