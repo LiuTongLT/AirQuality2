@@ -28,7 +28,7 @@ public class Measurement implements Serializable{
     public void setDate(Date date) {this.date = date;}
     public int getSeconds(){return date.getSeconds();}
     public int getMinutes(){return date.getMinutes();}
-    public int getDay(){return date.getDay();}
+    public int getDay(){return (int) (date.toString().charAt(8) - '0') * 10 + (int) (date.toString().charAt(9) - '0');}
     public int getMonth(){return date.getMonth();}
     public int getYear(){return date.getYear();}
 

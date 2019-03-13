@@ -101,10 +101,6 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
         String url = "https://a18ee5air2.studev.groept.be/query/avgWeek.php?location=" + location;
         RequestQueue queue = Volley.newRequestQueue(Menu.this);
 
-        /*LocalDateTime localToday = LocalDateTime.ofInstant(today.toInstant(), ZoneId.systemDefault());
-        final int dayOfToday = localToday.getDayOfMonth();
-        System.out.println("Day of today: " + dayOfToday);*/
-
         System.out.println("Get measurements starts");
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -123,7 +119,9 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
 
                                 try{
                                 data.addMeasurement(new Measurement(co_value,pm_value,date,loc));}
-                                catch(AlreadyAddedException A){}
+                                catch(AlreadyAddedException A){
+                                    Toast.makeText(Menu.this,"Add measurement failed!",Toast.LENGTH_SHORT).show();
+                                }
 
                                 System.out.println("Date: " + date);
                                 System.out.println("PM: " + pm_value);
@@ -174,7 +172,9 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
 
                                 try{
                                     data.addSensor(new Sensor(sensorId,xcoordinate,ycoordinate,location));}
-                                catch(AlreadyAddedException A){}
+                                catch(AlreadyAddedException A){
+                                    Toast.makeText(Menu.this,"Add sensors failed!",Toast.LENGTH_SHORT).show();
+                                }
 
                                 System.out.println("SensorId: " + sensorId);
                                 System.out.println("Xcoordinate: " + xcoordinate);
