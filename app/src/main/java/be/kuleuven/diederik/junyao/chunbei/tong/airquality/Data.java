@@ -22,8 +22,7 @@ public class Data implements Serializable{
     }
 
     public Measurement getMeasurementByDate(Date date)throws NotInListException,EmptyListException{
-        if(measurements.isEmpty()){
-            throw new EmptyListException();}
+        if(measurements.isEmpty()){throw new EmptyListException();}
         else{
             Iterator<Measurement> it = measurements.iterator();
             while(it.hasNext()){
@@ -31,6 +30,18 @@ public class Data implements Serializable{
                 if (currentMeasurement.getDate().equals(date)){return currentMeasurement;}
             }
             throw new NotInListException();
+        }
+    }
+    public ArrayList getMeasurementsByLocation(String location)throws EmptyListException{
+        if(measurements.isEmpty()){throw new EmptyListException();}
+        else{
+            ArrayList measurementsByLocation = new ArrayList<Measurement>();
+            Iterator<Measurement> it = measurements.iterator();
+            while(it.hasNext()){
+                Measurement currentMeasurement = it.next();
+                if(currentMeasurement.getLocation().equals(location)){measurementsByLocation.add(currentMeasurement);}
+            }
+            return measurementsByLocation;
         }
     }
 

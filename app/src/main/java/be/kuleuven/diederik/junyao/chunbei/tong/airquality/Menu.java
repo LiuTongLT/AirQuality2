@@ -62,21 +62,6 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
 
     }
 
-    private void testData(){
-        ArrayList sensors = data.getSensors();
-        if(!sensors.isEmpty()){
-            Iterator<Sensor> it = sensors.iterator();
-            while(it.hasNext()){
-                Sensor currentSensor = it.next();
-                System.out.println("TEST");
-                System.out.println("SensorId: " + currentSensor.getSensorId());
-                System.out.println("Xcoordinate: " + currentSensor.getXcoordinate());
-                System.out.println("Ycoordinate: " + currentSensor.getYcoordinate());
-                System.out.println("Location: " + currentSensor.getLocation());
-            }
-        }
-    }
-
     @Override
     public void onClick(View view) {
         Intent intent;
@@ -93,14 +78,16 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.menu_map:
-                intent = new Intent(this, SensorMap.class); startActivity(intent);
+                intent = new Intent(this, SensorMap.class);
                 intent.putExtra("user",user);
                 intent.putExtra("data",data);
+                startActivity(intent);
                 break;
             case R.id.menu_list:
-                intent = new Intent(this,Position.class); startActivity(intent);
+                intent = new Intent(this,Position.class);
                 intent.putExtra("user",user);
                 intent.putExtra("data",data);
+                startActivity(intent);
                 break;
             default: break;
         }

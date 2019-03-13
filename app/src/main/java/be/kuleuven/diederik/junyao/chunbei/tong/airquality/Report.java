@@ -31,9 +31,9 @@ import java.lang.*;
 
 public class Report extends AppCompatActivity {
 
-    private ArrayList<DataPoint> seriesPM = new ArrayList<>();
-    private ArrayList<DataPoint> seriesCO = new ArrayList<>();
-    Data data = new Data();
+    private Data data = new Data();
+    private ArrayList<Measurement> measurements=new ArrayList<Measurement>();
+    private Sensor sensor;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -42,27 +42,34 @@ public class Report extends AppCompatActivity {
         setContentView(R.layout.activity_report);
 
         Intent intent = getIntent();
-        seriesPM = (ArrayList<DataPoint>) intent.getSerializableExtra("PM array");
-        seriesCO = (ArrayList<DataPoint>) intent.getSerializableExtra("CO array");
-        System.out.println("Size PM: "+ seriesPM.size());
-        System.out.println("Size CO: "+ seriesCO.size());
+        data=(Data) intent.getSerializableExtra("data");
+        sensor =(Sensor) intent.getSerializableExtra("sensor");
+        try{measurements=data.getMeasurementsByLocation(sensor.getLocation());}
+        catch(EmptyListException E){}
 
-        if(seriesPM.size()!=0){
-            DataPoint[] pm = new DataPoint[seriesPM.size()];
-            for(int i = 0; i<seriesPM.size(); i++){
-                pm[i] = seriesPM.get(i);
+        if(measurements.size()!=0){
+            DataPoint[] pm = new DataPoint[measurements.size()];
+            for(int i = 0; i<measurements.size(); i++){
+                double day=measurements.get(i).getDay();
+                double pmValue=measurements.get(i).getPmValue();
+                DataPoint datapointPm = new DataPoint(day,pmValue);
+                pm[i] = datapointPm;
                 System.out.println(pm[i]);
             }
+
 
             GraphView graph = (GraphView) findViewById(R.id.graphPM);
             LineGraphSeries<DataPoint> series = new LineGraphSeries<>(pm);
             graph.addSeries(series);
         }
 
-        if(seriesCO.size()!=0){
-            DataPoint[] co = new DataPoint[seriesCO.size()];
-            for(int i = 0; i<seriesCO.size(); i++){
-                co[i] = seriesCO.get(i);
+        if(measurements.size()!=0){
+            DataPoint[] co = new DataPoint[measurements.size()];
+            for(int i = 0; i<measurements.size(); i++){
+                double day=measurements.get(i).getDay();
+                double coValue=measurements.get(i).getCoValue();
+                DataPoint datapointCo = new DataPoint(day,coValue);
+                co[i] = datapointCo;
                 System.out.println(co[i]);
             }
 

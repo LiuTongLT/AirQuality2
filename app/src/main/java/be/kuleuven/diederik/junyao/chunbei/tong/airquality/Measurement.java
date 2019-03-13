@@ -1,5 +1,7 @@
 package be.kuleuven.diederik.junyao.chunbei.tong.airquality;
 
+import com.jjoe64.graphview.series.DataPoint;
+
 import java.io.Serializable;
 import java.util.Date;
 
