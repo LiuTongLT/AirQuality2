@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.lang.*;
 
@@ -56,7 +57,6 @@ public class Report extends AppCompatActivity {
                 pm[i] = datapointPm;
                 System.out.println(pm[i]);
             }
-
 
             GraphView graph = (GraphView) findViewById(R.id.graphPM);
             LineGraphSeries<DataPoint> series = new LineGraphSeries<>(pm);

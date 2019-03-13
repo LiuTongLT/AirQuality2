@@ -100,9 +100,20 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/buttonstyles"
                 android:text="SIGN UP"
+                android:textStyle="italic" />
+
+            <Button
+                android:id="@+id/go_back"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/buttonstyles"
+                android:text="Go Back"
                 android:textStyle="italic" />
 
         </LinearLayout>

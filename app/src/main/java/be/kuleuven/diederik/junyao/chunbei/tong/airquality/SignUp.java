@@ -27,6 +27,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
     Button signUp;
     Button confirm;
+    Button goBack;
     EditText firstName;
     EditText lastName;
     EditText eMailAddress;
@@ -47,6 +48,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
         signUp.setOnClickListener(this);
         confirm.setOnClickListener(this);
+        goBack.setOnClickListener(this);
 
     }
 
@@ -58,6 +60,9 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                 break;
             case R.id.sign_up:
                 saveInfo();
+                break;
+            case R.id.go_back:
+                changeActivity();
                 break;
             default: break;
 

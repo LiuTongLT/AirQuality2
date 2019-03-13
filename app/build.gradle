@@ -39,6 +39,7 @@ dependencies {
     //implementation project(':GraphView')
 
     implementation 'com.android.volley:volley:1.1.1'
+    //implementation 'com.android.support:recyclerview-v7:28.+'
 }
 
 apply plugin: 'com.google.gms.google-services'
