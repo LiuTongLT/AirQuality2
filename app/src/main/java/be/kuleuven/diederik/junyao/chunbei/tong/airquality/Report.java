@@ -30,18 +30,9 @@ import java.util.Date;
 import java.lang.*;
 
 public class Report extends AppCompatActivity {
-    private String location;
-
-    Date today = new Date();
-//    private DataPoint[] seriesPM = {new DataPoint(4,5),new DataPoint(5,0),new DataPoint(6,0),new DataPoint(7,0),
-//            new DataPoint(8,4),new DataPoint(9,10),new DataPoint(10,0)};
 
     private ArrayList<DataPoint> seriesPM = new ArrayList<>();
     private ArrayList<DataPoint> seriesCO = new ArrayList<>();
-//    private ArrayList<DataPoint> seriesCO = new ArrayList<>();
-
-    //private LineGraphSeries<DataPoint> seriesPM = new LineGraphSeries<>();
-    //private LineGraphSeries<DataPoint> seriesCO = new LineGraphSeries<>();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -78,80 +69,5 @@ public class Report extends AppCompatActivity {
             LineGraphSeries<DataPoint> series = new LineGraphSeries<>(co);
             graph.addSeries(series);
         }
-        //System.out.println("Location: "+location);
-
-//        GraphView graph = (GraphView) findViewById(R.id.graph);
-//        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-//                new DataPoint(0, 1),
-//                new DataPoint(1, 5),
-//                new DataPoint(2, 3),
-//                new DataPoint(3, 2),
-//                new DataPoint(4, 6)
-//        });
-//        graph.addSeries(series);
-
-
-        //getData();
     }
-
-//    @RequiresApi(api = Build.VERSION_CODES.O)
-//    public void getData(){
-//        String url = "https://a18ee5air2.studev.groept.be/query/avgWeek.php?location="+location;
-//        RequestQueue queue = Volley.newRequestQueue(Report.this);
-//
-//        LocalDateTime localToday = LocalDateTime.ofInstant(today.toInstant(), ZoneId.systemDefault());
-//        final int dayOfToday = localToday.getDayOfMonth();
-//        System.out.println("Day of today: "+dayOfToday);
-//
-//        System.out.println("Get data starts");
-//
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        try {
-//                            System.out.println("Into response!");
-//                            JSONArray jarr = new JSONArray(response);
-//                            for(int i = 0; i<jarr.length(); i++){
-//                                JSONObject jobj = jarr.getJSONObject(i);
-//                                String day = jobj.getString("days");
-//                                Date date=new SimpleDateFormat("yyyy-MM-dd").parse(day);
-//                                Double pm_value = jobj.getDouble("avg_pm");
-//                                Double co_value = jobj.getDouble("avg_CO");
-//
-//                                int dayOfDate = (int)(day.charAt(8)-'0')*10+(int)(day.charAt(9)-'0');
-//
-//                                DataPoint dataPointPM = new DataPoint(dayOfDate,pm_value);
-//
-//                                if(7-dayOfToday+dayOfDate >= 0 && 7-dayOfToday+dayOfDate <= 6){
-//                                    seriesPM[7-dayOfToday+dayOfDate] = dataPointPM;
-//                                }
-//
-//                                DataPoint dataPointCO = new DataPoint(date,co_value);
-//
-//                                System.out.println("Date: "+date);
-//                                System.out.println("PM: "+pm_value);
-//                                System.out.println("Day of date: "+dayOfDate);
-//                                System.out.println("SeriesPM: "+seriesPM[7-dayOfToday+dayOfDate]);
-//                            }
-//                            System.out.println("End of response!");
-//                        } catch (JSONException e) {
-//                            System.out.println(e);
-//                        } catch (ParseException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(Report.this, "Error...", Toast.LENGTH_SHORT).show();
-//                error.printStackTrace();
-//            }
-//        });
-//        queue.add(stringRequest);
-//        GraphView graph = (GraphView) findViewById(R.id.graph);
-//        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(seriesPM);
-//        graph.addSeries(series);
-//    }
 }

@@ -37,9 +37,6 @@ public class Position extends AppCompatActivity implements View.OnClickListener{
     private ArrayList<DataPoint> seriesPMGT = new ArrayList<>();
     private ArrayList<DataPoint> seriesCOGT = new ArrayList<>();
 
-    //DataPoint[] seriesPM = {new DataPoint(4,5),new DataPoint(5,0),new DataPoint(6,0),new DataPoint(7,0),
-    //        new DataPoint(8,4),new DataPoint(9,10),new DataPoint(10,0)};
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +114,6 @@ public class Position extends AppCompatActivity implements View.OnClickListener{
                                 System.out.println("PM: " + pm_value);
                                 System.out.println("CO: " + co_value);
                                 System.out.println("Day of date: " + dayOfDate);
-                                //System.out.println("SeriesPM: " + seriesPM[7 - dayOfToday + dayOfDate]);
                             }
                             System.out.println("End of response!");
                         } catch (JSONException e) {
