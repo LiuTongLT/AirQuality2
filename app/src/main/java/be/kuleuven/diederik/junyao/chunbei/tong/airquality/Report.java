@@ -5,6 +5,8 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -33,11 +35,12 @@ import java.util.Comparator;
 import java.util.Date;
 import java.lang.*;
 
-public class Report extends AppCompatActivity {
+public class Report extends AppCompatActivity implements View.OnClickListener {
 
     private Data data = new Data();
     private ArrayList<Measurement> measurements=new ArrayList<Measurement>();
     private Sensor sensor;
+    private TextView back;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -45,11 +48,20 @@ public class Report extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
 
+        back = (TextView) findViewById(R.id.report_back);
+        back.setOnClickListener(this);
+
         Intent intent = getIntent();
         data=(Data) intent.getSerializableExtra("data");
         sensor =(Sensor) intent.getSerializableExtra("sensor");
+        String location = (String) intent.getSerializableExtra("location");
         try{
-            measurements=data.getMeasurementsByLocation(sensor.getLocation());
+            if(location!=null){
+                measurements=data.getMeasurementsByLocation(location);
+            }
+            else{
+                measurements=data.getMeasurementsByLocation(sensor.getLocation());
+            }
             Collections.sort(measurements, new Comparator<Measurement>() {
                 @Override
                 public int compare(Measurement m1, Measurement m2) {
@@ -92,5 +104,18 @@ public class Report extends AppCompatActivity {
             graph.addSeries(series);
         }
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent;
+        switch (view.getId()){
+            case R.id.report_back:
+                intent = new Intent(this,Menu.class);
+                startActivity(intent);
+                break;
+                default:
+                    break;
+        }
     }
 }
