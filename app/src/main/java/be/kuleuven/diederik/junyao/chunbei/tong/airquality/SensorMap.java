@@ -71,19 +71,7 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
 
         Intent intent = getIntent();
         data = (Data) intent.getSerializableExtra("data");
-        if(data==null){
-            data = new Data();
-        }
         user = (User) intent.getSerializableExtra("user");
-        //temporally added like this, in the future with database
-        try{
-            data.addSensor(new Sensor(1,50.874780, 4.707391,"GroepT"));
-            data.addSensor(new Sensor(2,50.875178, 4.707976,"CinemaZ"));
-            data.addSensor(new Sensor(3,50.875882, 4.707917,"Alma1"));
-            data.addSensor(new Sensor(4,50.875222, 4.709558,"Spar"));
-            data.addSensor(new Sensor(5,50.877863, 4.704656,"College De Valk"));
-            }
-        catch(AlreadyAddedException A){}
 
         goBack = findViewById(R.id.sensor_map_goBack);
         getReport = findViewById(R.id.sensor_map_getReport);
@@ -98,15 +86,14 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        mMap.setOnMarkerClickListener(this);
+        mMap.setOnMapClickListener(this);
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
             return;
         }
-
-        mMap.setOnMarkerClickListener(this);
-        mMap.setOnMapClickListener(this);
-
     }
 
     @Override
