@@ -45,10 +45,10 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("user");
 
-        mapMenu = findViewById(R.id.menu_map);
-        listMenu = findViewById(R.id.menu_list);
-        userInfoMenu = findViewById(R.id.menu_userinfo);
-        signOutMenu = findViewById(R.id.menu_out);
+        mapMenu = (CardView) findViewById(R.id.menu_map);
+        listMenu = (CardView) findViewById(R.id.menu_list);
+        userInfoMenu = (CardView) findViewById(R.id.menu_userinfo);
+        signOutMenu = (CardView) findViewById(R.id.menu_out);
 
         mapMenu.setOnClickListener(this);
         listMenu.setOnClickListener(this);
@@ -93,7 +93,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void getMeasurements(String location) {
+    public void getMeasurements(String location) {
 
         final String loc=location;
 
@@ -145,7 +145,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void getSensors() {
+    public void getSensors() {
         String url = "https://a18ee5air2.studev.groept.be/query/readSensorNode.php";
         RequestQueue queue = Volley.newRequestQueue(Menu.this);
 

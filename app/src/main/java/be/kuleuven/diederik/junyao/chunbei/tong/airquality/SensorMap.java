@@ -14,6 +14,7 @@ package be.kuleuven.diederik.junyao.chunbei.tong.airquality;
         import android.support.v4.content.ContextCompat;
         import android.view.View;
         import android.widget.Button;
+        import android.widget.ImageView;
         import android.widget.Toast;
 
         import com.android.volley.Request;
@@ -48,7 +49,12 @@ package be.kuleuven.diederik.junyao.chunbei.tong.airquality;
         import java.text.SimpleDateFormat;
         import java.util.ArrayList;
         import java.util.Date;
+        import java.util.HashMap;
+        import java.util.HashSet;
+        import java.util.Hashtable;
         import java.util.Iterator;
+        import java.util.Map;
+        import java.util.Set;
 
 public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -69,6 +75,9 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
     Button goBack;
     private Sensor sensorOfMarker;
     private User user;
+    private ImageView refresh;
+    //private Map<String, double[]> currentV = new Hashtable<>();
+    private Set<Measurement> currentV = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +97,9 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
 
         goBack = findViewById(R.id.sensor_map_goBack);
         getReport = findViewById(R.id.sensor_map_getReport);
+        refresh = findViewById(R.id.map_refresh);
 
+        refresh.setOnClickListener(this);
         getReport.setOnClickListener(this);
         goBack.setOnClickListener(this);
         getReport.setVisibility(View.INVISIBLE);
@@ -130,6 +141,17 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
                 intent1.putExtra("user", user);
                 startActivity(intent1);
                 finish();
+                break;
+            case R.id.map_refresh:
+                ArrayList<Sensor> sensors = data.getSensors();
+                for(int i = 0; i < sensors.size(); i++){
+                    getCurrentValue(sensors.get(i).getLocation());
+                }
+                Iterator<Measurement> itr = currentV.iterator();
+                while(itr.hasNext()){
+                    Measurement m = itr.next();
+                    System.out.println("Location: "+m.getLocation()+" CO: "+m.getCoValue()+" PM: "+m.getPmValue());
+                }
                 break;
             case R.id.sensor_map_getReport:
                 Intent intent2 = new Intent (SensorMap.this, Report.class);
@@ -211,18 +233,31 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
                     public void onResponse(String response) {
                         try {
                             System.out.println("Into response!");
+//                            JSONObject jobj = new JSONObject(response);
+//                            double currentPM = jobj.getDouble("valuePM");
+//                            double currentCO = jobj.getDouble("valueCO");
+//                            values[0]=currentPM;
+//                            values[1]=currentCO;
                             JSONArray jarr = new JSONArray(response);
                             for (int i = 0; i < jarr.length(); i++) {
                                 JSONObject jobj = jarr.getJSONObject(i);
                                 double currentPM = jobj.getDouble("valuePM");
                                 double currentCo=jobj.getDouble("valueCO");
+                                String day = jobj.getString("timeStamps");
+                                Date date = new SimpleDateFormat("yyyy-MM-dd").parse(day);
+                                Measurement m = new Measurement(currentCo,currentPM,date,loc);
+                                currentV.add(m);
                                 values[0]=currentPM;
                                 values[1]=currentCo;
                             }
                             System.out.println("End of response!");
+                            System.out.println("currentPM: "+values[0]);
+                            System.out.println("currentCO: "+values[1]);
 
                         } catch (JSONException e) {
                             System.out.println(e);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -259,7 +294,16 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
                 String pmValue=Double.toString(getCurrentValue(currentSensor.getLocation())[0]);
                 String coValue=Double.toString(getCurrentValue(currentSensor.getLocation())[1]);
                 markerOptions.title("Location: " + currentSensor.getLocation());
-                markerOptions.snippet("PM value: " + Double.toString(getCurrentValue(currentSensor.getLocation())[0])+", CO value: " +Double.toString(getCurrentValue(currentSensor.getLocation())[1]));
+
+                Iterator<Measurement> itr = currentV.iterator();
+                while(itr.hasNext()){
+                    Measurement m = itr.next();
+                    if(m.getLocation().equals(currentSensor.getLocation())){
+                        markerOptions.snippet("PM value: " + Double.toString(m.getPmValue())+", CO value: " +Double.toString(m.getCoValue()));
+                        break;
+                    }
+                }
+                //markerOptions.snippet("PM value: " + Double.toString(currentV.get(currentSensor.getLocation())[0])+", CO value: " +Double.toString(currentV.get(currentSensor.getLocation())[1]));
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                 marker = mMap.addMarker(markerOptions);
                 marker.setTag(currentSensor);

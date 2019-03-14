@@ -60,6 +60,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 break;
             case R.id.signup_login:
                 intent = new Intent(this, SignUp.class);
+                intent.putExtra("user",user);
                 startActivity(intent);
                 break;
             default:
