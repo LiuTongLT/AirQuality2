@@ -55,7 +55,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
         userInfoMenu.setOnClickListener(this);
         signOutMenu.setOnClickListener(this);
 
-        getMeasurements("groept");
+        getMeasurements("groupt");
         getMeasurements("agora");
         getSensors();
 

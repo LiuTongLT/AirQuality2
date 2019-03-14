@@ -101,6 +101,7 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
 
         mMap.setOnMarkerClickListener(this);
         mMap.setOnMapClickListener(this);
+        addSensors();
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             buildGoogleApiClient();
@@ -117,8 +118,7 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
     }
 
     @Override
-    public void onMapClick(LatLng latLng) {
-        getReport.setVisibility(View.INVISIBLE);
+    public void onMapClick(LatLng latLng) { getReport.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -195,17 +195,6 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
         mMap.animateCamera(CameraUpdateFactory.zoomBy(5));
 
         if(googleApiClient!=null){LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,this);}
-
-        /*if(currentCircle!=null){currentCircle.remove();}
-        CircleOptions circleOptions = new CircleOptions();
-        circleOptions.center(latLng);
-        circleOptions.radius(5);
-        circleOptions.strokeColor(Color.GREEN);
-        circleOptions.strokeWidth(1);
-        circleOptions.fillColor(Color.argb(60,0,127,14));
-        currentCircle=mMap.addCircle(circleOptions);*/
-
-        addSensors();
     }
 
     private double[] getCurrentValue(String location){
@@ -296,7 +285,8 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
         locationRequest.setInterval(1100);
         locationRequest.setFastestInterval(1100);
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);}
+        if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
+            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);}
     }
 
     @Override
