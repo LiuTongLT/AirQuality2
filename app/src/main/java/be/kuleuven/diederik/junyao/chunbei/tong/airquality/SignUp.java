@@ -44,7 +44,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
         signUp = findViewById(R.id.sign_up);
         confirm = findViewById(R.id.sign_up_confirm);
-
+        goBack=findViewById(R.id.sign_up_goBack);
 
         signUp.setOnClickListener(this);
         confirm.setOnClickListener(this);
@@ -61,7 +61,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
             case R.id.sign_up:
                 saveInfo();
                 break;
-            case R.id.go_back:
+            case R.id.sign_up_goBack:
                 changeActivity();
                 break;
             default: break;
