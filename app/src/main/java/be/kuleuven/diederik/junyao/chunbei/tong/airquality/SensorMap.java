@@ -78,6 +78,8 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
     private ImageView refresh;
     //private Map<String, double[]> currentV = new Hashtable<>();
     private Set<Measurement> currentV = new HashSet<>();
+    private double[] gtCurrent = new double[2];
+    private double[] agCurrent = new double[2];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +105,10 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
         getReport.setOnClickListener(this);
         goBack.setOnClickListener(this);
         getReport.setVisibility(View.INVISIBLE);
+
+//        addSensors();
+        getCurrentValue("groupt");
+        getCurrentValue("agora");
 
     }
 
@@ -143,15 +149,21 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
                 finish();
                 break;
             case R.id.map_refresh:
-                ArrayList<Sensor> sensors = data.getSensors();
-                for(int i = 0; i < sensors.size(); i++){
-                    getCurrentValue(sensors.get(i).getLocation());
-                }
-                Iterator<Measurement> itr = currentV.iterator();
-                while(itr.hasNext()){
-                    Measurement m = itr.next();
-                    System.out.println("Location: "+m.getLocation()+" CO: "+m.getCoValue()+" PM: "+m.getPmValue());
-                }
+                getCurrentValue("groupt");
+                getCurrentValue("agora");
+                System.out.println("gt PM: "+gtCurrent[0]+" gt CO: "+gtCurrent[1]);
+                addSensors();
+
+
+//                ArrayList<Sensor> sensors = data.getSensors();
+//                for(int i = 0; i < sensors.size(); i++){
+//                    getCurrentValue(sensors.get(i).getLocation());
+//                }
+//                Iterator<Measurement> itr = currentV.iterator();
+//                while(itr.hasNext()){
+//                    Measurement m = itr.next();
+//                    System.out.println("Location: "+m.getLocation()+" CO: "+m.getCoValue()+" PM: "+m.getPmValue());
+//                }
                 break;
             case R.id.sensor_map_getReport:
                 Intent intent2 = new Intent (SensorMap.this, Report.class);
@@ -219,7 +231,7 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
         if(googleApiClient!=null){LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,this);}
     }
 
-    private double[] getCurrentValue(String location){
+    private void getCurrentValue(final String location){
         final String loc=location;
         final double[] values=new double[2];
         String url = "https://a18ee5air2.studev.groept.be/query/readCurrent.php?location=" + location;
@@ -247,6 +259,14 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
                                 Date date = new SimpleDateFormat("yyyy-MM-dd").parse(day);
                                 Measurement m = new Measurement(currentCo,currentPM,date,loc);
                                 currentV.add(m);
+                                if(location.equals("groupt")){
+                                    gtCurrent[0] = currentPM;
+                                    gtCurrent[1] = currentCo;
+                                }
+                                else if(location.equals("agora")){
+                                    agCurrent[0] = currentPM;
+                                    agCurrent[1] = currentCo;
+                                }
                                 values[0]=currentPM;
                                 values[1]=currentCo;
                             }
@@ -268,7 +288,6 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
             }
         });
         queue.add(stringRequest);
-        return values;
     }
 
     private void addSensors(){
@@ -291,18 +310,14 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
 
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(latlng);
-                String pmValue=Double.toString(getCurrentValue(currentSensor.getLocation())[0]);
-                String coValue=Double.toString(getCurrentValue(currentSensor.getLocation())[1]);
                 markerOptions.title("Location: " + currentSensor.getLocation());
 
-                Iterator<Measurement> itr = currentV.iterator();
-                while(itr.hasNext()){
-                    Measurement m = itr.next();
-                    if(m.getLocation().equals(currentSensor.getLocation())){
-                        markerOptions.snippet("PM value: " + Double.toString(m.getPmValue())+", CO value: " +Double.toString(m.getCoValue()));
-                        break;
-                    }
+                if(currentSensor.getLocation().equals("groupt")){
+                    markerOptions.snippet("PM value: " + Double.toString(gtCurrent[0])+", CO value: " +Double.toString(gtCurrent[1]));
+                }else if(currentSensor.getLocation().equals("agora")){
+                    markerOptions.snippet("PM value: " + Double.toString(agCurrent[0])+", CO value: " +Double.toString(agCurrent[1]));
                 }
+
                 //markerOptions.snippet("PM value: " + Double.toString(currentV.get(currentSensor.getLocation())[0])+", CO value: " +Double.toString(currentV.get(currentSensor.getLocation())[1]));
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                 marker = mMap.addMarker(markerOptions);

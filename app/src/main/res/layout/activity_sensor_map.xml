@@ -55,7 +55,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/buttonstyles"
-        android:text="Go to the report of this sensor"
+        android:text="Go to the report of this location"
         app:layout_constraintBottom_toTopOf="@+id/sensor_map_goBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
