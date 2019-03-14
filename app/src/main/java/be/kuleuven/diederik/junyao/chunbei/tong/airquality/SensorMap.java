@@ -66,7 +66,6 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
     private LocationRequest locationRequest;
     private Location lastLocation;
     private Marker currentUserLocationMarker;
-    //private Circle currentCircle;
     private static final int Request_User_Location_Code = 99;
     private ArrayList markers = new ArrayList<Marker>();
     private Data data;
@@ -76,7 +75,6 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
     private Sensor sensorOfMarker;
     private User user;
     private ImageView refresh;
-    //private Map<String, double[]> currentV = new Hashtable<>();
     private Set<Measurement> currentV = new HashSet<>();
     private double[] gtCurrent = new double[2];
     private double[] agCurrent = new double[2];
@@ -94,7 +92,6 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
 
         Intent intent = getIntent();
         data = (Data) intent.getSerializableExtra("data");
-        //System.out.println("Sensors: "+data.getSensors());
         user = (User) intent.getSerializableExtra("user");
 
         goBack = findViewById(R.id.sensor_map_goBack);
@@ -106,7 +103,6 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
         goBack.setOnClickListener(this);
         getReport.setVisibility(View.INVISIBLE);
 
-//        addSensors();
         getCurrentValue("groupt");
         getCurrentValue("agora");
 
@@ -153,17 +149,7 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
                 getCurrentValue("agora");
                 System.out.println("gt PM: "+gtCurrent[0]+" gt CO: "+gtCurrent[1]);
                 addSensors();
-
-
-//                ArrayList<Sensor> sensors = data.getSensors();
-//                for(int i = 0; i < sensors.size(); i++){
-//                    getCurrentValue(sensors.get(i).getLocation());
-//                }
-//                Iterator<Measurement> itr = currentV.iterator();
-//                while(itr.hasNext()){
-//                    Measurement m = itr.next();
-//                    System.out.println("Location: "+m.getLocation()+" CO: "+m.getCoValue()+" PM: "+m.getPmValue());
-//                }
+                Toast.makeText(this,"Refresh success!",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.sensor_map_getReport:
                 Intent intent2 = new Intent (SensorMap.this, Report.class);
@@ -245,11 +231,6 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
                     public void onResponse(String response) {
                         try {
                             System.out.println("Into response!");
-//                            JSONObject jobj = new JSONObject(response);
-//                            double currentPM = jobj.getDouble("valuePM");
-//                            double currentCO = jobj.getDouble("valueCO");
-//                            values[0]=currentPM;
-//                            values[1]=currentCO;
                             JSONArray jarr = new JSONArray(response);
                             for (int i = 0; i < jarr.length(); i++) {
                                 JSONObject jobj = jarr.getJSONObject(i);
