@@ -1,64 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/linearLayout">
+    android:id="@+id/sensor_map_drawer_layout">
 
+    <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        map:layout_constraintBottom_toBottomOf="parent"
-        tools:context=".SensorMap"
-        tools:layout_editor_absoluteX="0dp" />
+        <fragment
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            map:layout_constraintBottom_toBottomOf="parent"
+            tools:context=".SensorMap"
+            tools:layout_editor_absoluteX="0dp" />
 
-    <ImageView
-        android:id="@+id/map_refresh"
-        android:background="@drawable/buttonstyles"
-        android:src="@drawable/ic_autorenew_black_24dp"
+    </FrameLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/sensor_map_nav_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        tools:ignore="MissingConstraints" />
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/sensor_map_options"
+        app:headerLayout="@layout/nav_header_sensor_map"/>
 
-    <Button
-        android:id="@+id/sensor_map_goBack"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/buttonstyles"
-        android:text="Go Back"
-        app:layout_constraintBottom_toBottomOf="@+id/map"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/sensor_map_getReport"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/buttonstyles"
-        android:text="Go to the report of this location"
-        app:layout_constraintBottom_toTopOf="@+id/sensor_map_goBack"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
-</android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.DrawerLayout>

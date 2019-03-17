@@ -3,13 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="be.kuleuven.diederik.junyao.chunbei.tong.airquality">
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-
 
     <meta-data
         android:name="com.google.android.gms.version"
@@ -24,30 +23,36 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Login"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".Menu" />
-        <activity android:name=".SignUp" />
-        <activity android:name=".UserInfo" />
-        <activity android:name=".Position" />
-        <activity android:name=".Report" />
-
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBVWDI5huGlE3iS9SXyTz-tPb-A73ywhTg" />
 
         <activity
+            android:name=".Login"
+            android:theme="@style/AppTheme">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+
+        <activity android:name=".Menu" />
+        <activity android:name=".SignUp" />
+        <activity android:name=".UserInfo" />
+        <activity android:name=".Position" />
+        <activity android:name=".Report" />
+        <activity
             android:name=".SensorMap"
             android:label="@string/title_activity_map" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
     </application>
 
 </manifest>

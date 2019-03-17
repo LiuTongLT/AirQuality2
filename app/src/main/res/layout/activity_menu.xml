@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".Menu"
     android:orientation="vertical"
-    android:padding="10dp"
     android:background="@color/background"
+    android:padding="10dp"
     android:gravity="center">
 
     <LinearLayout
@@ -22,7 +22,7 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
 
-            android:layout_width="160dp"
+            android:layout_width="140dp"
             android:layout_height="190dp"
             android:layout_margin="10dp">
             
@@ -64,7 +64,7 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
 
-            android:layout_width="160dp"
+            android:layout_width="140dp"
             android:layout_height="190dp"
             android:layout_margin="10dp">
 
@@ -115,7 +115,7 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
 
-            android:layout_width="160dp"
+            android:layout_width="140dp"
             android:layout_height="190dp"
             android:layout_margin="10dp">
 
@@ -158,7 +158,7 @@
             android:clickable="true"
 
 
-            android:layout_width="160dp"
+            android:layout_width="140dp"
             android:layout_height="190dp"
             android:layout_margin="10dp">
 

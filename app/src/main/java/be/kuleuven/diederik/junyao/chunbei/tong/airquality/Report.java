@@ -3,8 +3,11 @@ package be.kuleuven.diederik.junyao.chunbei.tong.airquality;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,22 +38,25 @@ import java.util.Comparator;
 import java.util.Date;
 import java.lang.*;
 
-public class Report extends AppCompatActivity implements View.OnClickListener {
+public class Report
+
+        extends
+        AppCompatActivity
+        implements
+        NavigationView.OnNavigationItemSelectedListener
+
+{
 
     private Data data = new Data();
     private User user;
     private ArrayList<Measurement> measurements=new ArrayList<Measurement>();
     private Sensor sensor;
-    private TextView back;
+    private DrawerLayout drawerLayout;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
-
-        back = (TextView) findViewById(R.id.report_back);
-        back.setOnClickListener(this);
 
         Intent intent = getIntent();
         data=(Data) intent.getSerializableExtra("data");
@@ -72,8 +78,6 @@ public class Report extends AppCompatActivity implements View.OnClickListener {
             });
         }
         catch(EmptyListException E){}
-
-
 
         if(measurements.size()!=0){
             DataPoint[] pm = new DataPoint[measurements.size()];
@@ -105,20 +109,43 @@ public class Report extends AppCompatActivity implements View.OnClickListener {
             graph.addSeries(series);
         }
 
+        drawerLayout = findViewById(R.id.report_drawer_layout);
+        NavigationView navigationView = findViewById(R.id.report_nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener(){
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {}
+            @Override
+            public void onDrawerOpened(View drawerView) {}
+            @Override
+            public void onDrawerClosed(View drawerView) {}
+            @Override
+            public void onDrawerStateChanged(int newState) {}
+        });
+
     }
 
     @Override
-    public void onClick(View view) {
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
         Intent intent;
-        switch (view.getId()){
-            case R.id.report_back:
-                intent = new Intent(this,Menu.class);
-                intent.putExtra("data",data);
-                intent.putExtra("user",user);
-                startActivity(intent);
-                break;
-                default:
-                    break;
+        int id = menuItem.getItemId();
+        if (id == R.id.report_to_map) {
+            intent = new Intent(this,SensorMap.class);
+            intent.putExtra("data",data);
+            intent.putExtra("user",user);
+            startActivity(intent);
+            finish();
+        }else if(id == R.id.report_back_to_menu){
+            intent = new Intent(this,Menu.class);
+            intent.putExtra("data",data);
+            intent.putExtra("user",user);
+            startActivity(intent);
+            finish();
         }
+        else if(id == R.id.report_refresh){
+            Toast.makeText(Report.this,"Not implemented yet",Toast.LENGTH_SHORT).show();}
+        //menuItem.setChecked(true);
+        drawerLayout.closeDrawers();
+        return true;
     }
 }

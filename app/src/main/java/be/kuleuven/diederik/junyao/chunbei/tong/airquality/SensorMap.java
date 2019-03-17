@@ -1,111 +1,141 @@
 package be.kuleuven.diederik.junyao.chunbei.tong.airquality;
 
-        import android.Manifest;
-        import android.content.Intent;
-        import android.content.pm.PackageManager;
-        import android.graphics.Color;
-        import android.location.Location;
-        import android.os.Build;
-        import android.os.Bundle;
-        import android.support.annotation.NonNull;
-        import android.support.annotation.Nullable;
-        import android.support.v4.app.ActivityCompat;
-        import android.support.v4.app.FragmentActivity;
-        import android.support.v4.content.ContextCompat;
-        import android.view.View;
-        import android.widget.Button;
-        import android.widget.ImageView;
-        import android.widget.Toast;
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
-        import com.android.volley.Request;
-        import com.android.volley.RequestQueue;
-        import com.android.volley.Response;
-        import com.android.volley.VolleyError;
-        import com.android.volley.toolbox.StringRequest;
-        import com.android.volley.toolbox.Volley;
-        import com.google.android.gms.common.ConnectionResult;
-        import com.google.android.gms.common.api.GoogleApiClient;
-        import com.google.android.gms.location.LocationListener;
-        import com.google.android.gms.location.LocationRequest;
-        import com.google.android.gms.location.LocationServices;
-        import com.google.android.gms.maps.CameraUpdate;
-        import com.google.android.gms.maps.CameraUpdateFactory;
-        import com.google.android.gms.maps.GoogleMap;
-        import com.google.android.gms.maps.OnMapReadyCallback;
-        import com.google.android.gms.maps.SupportMapFragment;
-        import com.google.android.gms.maps.model.BitmapDescriptor;
-        import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-        import com.google.android.gms.maps.model.Circle;
-        import com.google.android.gms.maps.model.CircleOptions;
-        import com.google.android.gms.maps.model.LatLng;
-        import com.google.android.gms.maps.model.Marker;
-        import com.google.android.gms.maps.model.MarkerOptions;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-        import org.json.JSONArray;
-        import org.json.JSONException;
-        import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-        import java.text.ParseException;
-        import java.text.SimpleDateFormat;
-        import java.util.ArrayList;
-        import java.util.Date;
-        import java.util.HashMap;
-        import java.util.HashSet;
-        import java.util.Hashtable;
-        import java.util.Iterator;
-        import java.util.Map;
-        import java.util.Set;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
-public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener,
-        LocationListener, View.OnClickListener {
+public class SensorMap
+
+    extends
+    AppCompatActivity
+    implements
+    OnMapReadyCallback,
+    GoogleApiClient.ConnectionCallbacks,
+    GoogleApiClient.OnConnectionFailedListener,
+    GoogleMap.OnMarkerClickListener,
+    GoogleMap.OnMapClickListener,
+    LocationListener,
+    GoogleMap.OnInfoWindowClickListener,
+    NavigationView.OnNavigationItemSelectedListener
+
+{
 
     private GoogleMap mMap;
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
-    private Location lastLocation;
-    private Marker currentUserLocationMarker;
     private static final int Request_User_Location_Code = 99;
     private ArrayList markers = new ArrayList<Marker>();
     private Data data;
     private Marker marker;
-    Button getReport;
-    Button goBack;
     private Sensor sensorOfMarker;
     private User user;
-    private ImageView refresh;
     private Set<Measurement> currentV = new HashSet<>();
     private double[] gtCurrent = new double[2];
     private double[] agCurrent = new double[2];
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensor_map);
 
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {checkUserLocationPermission();}
+        checkUserLocationPermission();
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         Intent intent = getIntent();
         data = (Data) intent.getSerializableExtra("data");
         user = (User) intent.getSerializableExtra("user");
 
-        goBack = findViewById(R.id.sensor_map_goBack);
-        getReport = findViewById(R.id.sensor_map_getReport);
-        refresh = findViewById(R.id.map_refresh);
-
-        refresh.setOnClickListener(this);
-        getReport.setOnClickListener(this);
-        goBack.setOnClickListener(this);
-        getReport.setVisibility(View.INVISIBLE);
-
         getCurrentValue("groupt");
         getCurrentValue("agora");
 
+        drawerLayout = findViewById(R.id.sensor_map_drawer_layout);
+
+        NavigationView navigationView = findViewById(R.id.sensor_map_nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener(){
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {}
+            @Override
+            public void onDrawerOpened(View drawerView) {}
+            @Override
+            public void onDrawerClosed(View drawerView) {}
+            @Override
+            public void onDrawerStateChanged(int newState) {}
+        });
+
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        int id = menuItem.getItemId();
+        if (id == R.id.sensor_map_refresh) {
+            getCurrentValue("groupt");
+            getCurrentValue("agora");
+            System.out.println("gt PM: "+gtCurrent[0]+" gt CO: "+gtCurrent[1]);
+            addSensors();
+            Toast.makeText(SensorMap.this,"Successfully refreshed!",Toast.LENGTH_SHORT).show();
+        }else if(id == R.id.sensor_map_goBack){
+            Intent intent1 = new Intent (SensorMap.this, Menu.class);
+            intent1.putExtra("data", data);
+            intent1.putExtra("user", user);
+            startActivity(intent1);
+            finish();
+        }
+        else if(id == R.id.sensor_map_add_sensor){
+            Toast.makeText(SensorMap.this,"Not implemented yet",Toast.LENGTH_SHORT).show();}
+        //menuItem.setChecked(true);
+        // close drawer when item is tapped
+        drawerLayout.closeDrawers();
+
+        return true;
     }
 
     @Override
@@ -114,6 +144,7 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
 
         mMap.setOnMarkerClickListener(this);
         mMap.setOnMapClickListener(this);
+        mMap.setOnInfoWindowClickListener(this);
         addSensors();
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -125,48 +156,32 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        sensorOfMarker=(Sensor)marker.getTag();
-        getReport.setVisibility(View.VISIBLE);
+        InfoWindowData infoWindowData=(InfoWindowData)marker.getTag();
+        sensorOfMarker = infoWindowData.getSensor();
         return false;
     }
 
     @Override
-    public void onMapClick(LatLng latLng) { getReport.setVisibility(View.INVISIBLE);
-    }
+    public void onMapClick(LatLng latLng) {}
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.sensor_map_goBack:
-                Intent intent1 = new Intent (SensorMap.this, Menu.class);
-                intent1.putExtra("data", data);
-                intent1.putExtra("user", user);
-                startActivity(intent1);
-                finish();
-                break;
-            case R.id.map_refresh:
-                getCurrentValue("groupt");
-                getCurrentValue("agora");
-                System.out.println("gt PM: "+gtCurrent[0]+" gt CO: "+gtCurrent[1]);
-                addSensors();
-                Toast.makeText(this,"Refresh success!",Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.sensor_map_getReport:
-                Intent intent2 = new Intent (SensorMap.this, Report.class);
-                intent2.putExtra("data", data);
-                intent2.putExtra("user", user);
-                intent2.putExtra("sensor", sensorOfMarker);
-                startActivity(intent2);
-                finish();
-                break;
-        }
+    public void onInfoWindowClick(Marker marker) {
+        Intent intent2 = new Intent (SensorMap.this, Report.class);
+        intent2.putExtra("data", data);
+        intent2.putExtra("user", user);
+        intent2.putExtra("sensor", sensorOfMarker);
+        startActivity(intent2);
+        finish();
     }
 
     public boolean checkUserLocationPermission(){
         if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
+
             if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},Request_User_Location_Code);
+            }
+            else {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},Request_User_Location_Code);}
-            else {ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},Request_User_Location_Code);}
             return false;
         }
         else{return true;}
@@ -201,18 +216,10 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
     @Override
     public void onLocationChanged(Location location){
 
-        lastLocation = location;
-        mMap.clear();
-        if(currentUserLocationMarker!=null){currentUserLocationMarker.remove();}
-
         LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.title("user Current Location");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        currentUserLocationMarker=mMap.addMarker(markerOptions);
+
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomBy(5));
+        mMap.animateCamera(CameraUpdateFactory.zoomBy(1));
 
         if(googleApiClient!=null){LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,this);}
     }
@@ -269,15 +276,16 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
             }
         });
         queue.add(stringRequest);
+
     }
 
     private void addSensors(){
 
-        ArrayList<Sensor> sensors = new ArrayList<>();
-        sensors = data.getSensors();
+        ArrayList sensors = data.getSensors();
         if(!sensors.isEmpty()){
             Iterator<Sensor> it = sensors.iterator();
             while(it.hasNext()){
+
                 Sensor currentSensor = it.next();
 
                 LatLng latlng = new LatLng(currentSensor.getXcoordinate(),currentSensor.getYcoordinate());//latitude is xcoordinate, longitude is ycoordinate
@@ -290,19 +298,26 @@ public class SensorMap extends FragmentActivity implements OnMapReadyCallback,
                 }
 
                 MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(latlng);
-                markerOptions.title("Location: " + currentSensor.getLocation());
+                markerOptions.position(latlng).icon(BitmapDescriptorFactory.defaultMarker(143));
 
+                InfoWindowData info = new InfoWindowData();
+                info.setLocation(currentSensor.getLocation());
+
+                //next part needs improvement -> so it is applicable to a random amount of sensors
                 if(currentSensor.getLocation().equals("groupt")){
-                    markerOptions.snippet("PM value: " + Double.toString(gtCurrent[0])+", CO value: " +Double.toString(gtCurrent[1]));
+                    info.setPmValue("PM value: " + Double.toString(gtCurrent[0]));
+                    info.setCoValue("CO value: " +Double.toString(gtCurrent[1]));
                 }else if(currentSensor.getLocation().equals("agora")){
-                    markerOptions.snippet("PM value: " + Double.toString(agCurrent[0])+", CO value: " +Double.toString(agCurrent[1]));
+                    info.setPmValue("PM value: " + Double.toString(agCurrent[0]));
+                    info.setCoValue("CO value: " +Double.toString(agCurrent[1]));
                 }
+                info.setSensor(currentSensor);
 
-                //markerOptions.snippet("PM value: " + Double.toString(currentV.get(currentSensor.getLocation())[0])+", CO value: " +Double.toString(currentV.get(currentSensor.getLocation())[1]));
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                CustomInfoWindow customInfoWindow = new CustomInfoWindow(this);
+                mMap.setInfoWindowAdapter(customInfoWindow);
+
                 marker = mMap.addMarker(markerOptions);
-                marker.setTag(currentSensor);
+                marker.setTag(info);
                 markers.add(marker);
             }
         }

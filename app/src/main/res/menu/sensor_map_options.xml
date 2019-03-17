@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/sensor_map_refresh"
+            android:icon="@drawable/ic_autorenew_black_24dp"
+            android:title="Refresh the map" />
+        <item
+            android:id="@+id/sensor_map_add_sensor"
+            android:icon="@drawable/ic_add_black_24dp"
+            android:title="Add a sensor to the map" />
+        <item
+            android:id="@+id/sensor_map_goBack"
+            android:icon="@drawable/ic_arrow_back_black_24dp"
+            android:title="Back to menu" />
+
+    </group>
+</menu>
