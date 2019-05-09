@@ -21,8 +21,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import static android.app.ProgressDialog.show;
-
 public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
     Button signUp;
@@ -45,6 +43,11 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         signUp = findViewById(R.id.sign_up);
         confirm = findViewById(R.id.sign_up_confirm);
         goBack=findViewById(R.id.sign_up_goBack);
+        firstName = findViewById(R.id.sign_up_firstName);
+        lastName = findViewById(R.id.sign_up_lastName);
+        eMailAddress = findViewById(R.id.sign_up_eMailAddress);
+        password = findViewById(R.id.sign_up_password);
+        repeatPassword = findViewById(R.id.sign_up_repeatPassword);
 
         signUp.setOnClickListener(this);
         confirm.setOnClickListener(this);
@@ -96,12 +99,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void checkInfo() {
-            firstName = findViewById(R.id.sign_up_firstName);
-            lastName = findViewById(R.id.sign_up_lastName);
-            eMailAddress = findViewById(R.id.sign_up_eMailAddress);
-            password = findViewById(R.id.sign_up_password);
-            repeatPassword = findViewById(R.id.sign_up_repeatPassword);
-
             final String email = eMailAddress.getText().toString();
             final String fName = firstName.getText().toString();
             final String lName = lastName.getText().toString();

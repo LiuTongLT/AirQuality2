@@ -1,10 +1,10 @@
 package be.kuleuven.diederik.junyao.chunbei.tong.airquality;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,16 +38,18 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_login);
 
         if(user==null){
-            login = (Button) findViewById(R.id.button_login);
+            login = findViewById(R.id.button_login);
             login.setOnClickListener(this);
         }
 
 
-        signUp = (TextView) findViewById(R.id.signup_login);
+        signUp = findViewById(R.id.signup_login);
         signUp.setOnClickListener(this);
 
         Intent intent = getIntent();
         data=(Data)intent.getSerializableExtra("data");
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     @Override

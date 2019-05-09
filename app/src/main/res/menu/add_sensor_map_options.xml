@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/add_sensor_map_to_map"
+            android:icon="@drawable/ic_map_black_24dp"
+            android:title="Back to the sensor map" />
+        <item
+            android:id="@+id/add_sensor_map_to_menu"
+            android:icon="@drawable/ic_arrow_back_black_24dp"
+            android:title="To the menu" />
+
+    </group>
+</menu>

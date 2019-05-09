@@ -2,9 +2,9 @@ package be.kuleuven.diederik.junyao.chunbei.tong.airquality;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Toast;
@@ -15,10 +15,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.jjoe64.graphview.series.DataPoint;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,9 +22,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 
 public class Menu extends AppCompatActivity implements View.OnClickListener{
 
@@ -45,10 +39,10 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("user");
 
-        mapMenu = (CardView) findViewById(R.id.menu_map);
-        listMenu = (CardView) findViewById(R.id.menu_list);
-        userInfoMenu = (CardView) findViewById(R.id.menu_userinfo);
-        signOutMenu = (CardView) findViewById(R.id.menu_out);
+        mapMenu = findViewById(R.id.menu_map);
+        listMenu = findViewById(R.id.menu_list);
+        userInfoMenu = findViewById(R.id.menu_userinfo);
+        signOutMenu = findViewById(R.id.menu_out);
 
         mapMenu.setOnClickListener(this);
         listMenu.setOnClickListener(this);
@@ -64,7 +58,6 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         Intent intent;
-
         switch (view.getId())
         {
             case R.id.menu_out:
@@ -90,6 +83,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
                 break;
             default: break;
         }
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

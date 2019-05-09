@@ -13,7 +13,7 @@
         <item
             android:id="@+id/sensor_map_goBack"
             android:icon="@drawable/ic_arrow_back_black_24dp"
-            android:title="Back to menu" />
+            android:title="To the menu" />
 
     </group>
 </menu>

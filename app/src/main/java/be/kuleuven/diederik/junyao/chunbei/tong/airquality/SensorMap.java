@@ -32,6 +32,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -57,11 +58,9 @@ public class SensorMap
     GoogleApiClient.ConnectionCallbacks,
     GoogleApiClient.OnConnectionFailedListener,
     GoogleMap.OnMarkerClickListener,
-    GoogleMap.OnMapClickListener,
     LocationListener,
     GoogleMap.OnInfoWindowClickListener,
     NavigationView.OnNavigationItemSelectedListener
-
 {
 
     private GoogleMap mMap;
@@ -77,6 +76,7 @@ public class SensorMap
     private double[] gtCurrent = new double[2];
     private double[] agCurrent = new double[2];
     private DrawerLayout drawerLayout;
+    private LatLng cameraPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,14 +123,23 @@ public class SensorMap
             addSensors();
             Toast.makeText(SensorMap.this,"Successfully refreshed!",Toast.LENGTH_SHORT).show();
         }else if(id == R.id.sensor_map_goBack){
-            Intent intent1 = new Intent (SensorMap.this, Menu.class);
-            intent1.putExtra("data", data);
-            intent1.putExtra("user", user);
-            startActivity(intent1);
+            Intent intent = new Intent(SensorMap.this, Menu.class);
+            intent.putExtra("data", data);
+            intent.putExtra("user", user);
+            startActivity(intent);
             finish();
         }
         else if(id == R.id.sensor_map_add_sensor){
-            Toast.makeText(SensorMap.this,"Not implemented yet",Toast.LENGTH_SHORT).show();}
+            Intent intent = new Intent(SensorMap.this, AddSensorMap.class);
+            intent.putExtra("latitude", cameraPosition.latitude);
+            intent.putExtra("longitude", cameraPosition.longitude);
+            intent.putExtra("data", data);
+            intent.putExtra("user", user);
+            startActivity(intent);
+            finish();
+            //Toast.makeText(SensorMap.this,"Click on the map to place a new sensor node!",Toast.LENGTH_SHORT).show();
+        }
+
         //menuItem.setChecked(true);
         // close drawer when item is tapped
         drawerLayout.closeDrawers();
@@ -141,9 +150,6 @@ public class SensorMap
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        mMap.setOnMarkerClickListener(this);
-        mMap.setOnMapClickListener(this);
         mMap.setOnInfoWindowClickListener(this);
         addSensors();
 
@@ -156,13 +162,13 @@ public class SensorMap
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        InfoWindowData infoWindowData=(InfoWindowData)marker.getTag();
-        sensorOfMarker = infoWindowData.getSensor();
+        try {
+            InfoWindowData infoWindowData=(InfoWindowData)marker.getTag();
+            sensorOfMarker = infoWindowData.getSensor();
+        } catch (NullPointerException e) {
+        }
         return false;
     }
-
-    @Override
-    public void onMapClick(LatLng latLng) {}
 
     @Override
     public void onInfoWindowClick(Marker marker) {
@@ -218,10 +224,11 @@ public class SensorMap
 
         LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomBy(1));
+        CameraPosition newCamPos = new CameraPosition(latLng, 14.0f, mMap.getCameraPosition().tilt, mMap.getCameraPosition().bearing);
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(newCamPos), 1000, null);
 
         if(googleApiClient!=null){LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,this);}
+        cameraPosition = latLng;
     }
 
     private void getCurrentValue(final String location){
@@ -305,11 +312,11 @@ public class SensorMap
 
                 //next part needs improvement -> so it is applicable to a random amount of sensors
                 if(currentSensor.getLocation().equals("groupt")){
-                    info.setPmValue("PM value: " + Double.toString(gtCurrent[0]));
-                    info.setCoValue("CO value: " +Double.toString(gtCurrent[1]));
+                    info.setPmValue("PM value: " + gtCurrent[0]);
+                    info.setCoValue("CO value: " + gtCurrent[1]);
                 }else if(currentSensor.getLocation().equals("agora")){
-                    info.setPmValue("PM value: " + Double.toString(agCurrent[0]));
-                    info.setCoValue("CO value: " +Double.toString(agCurrent[1]));
+                    info.setPmValue("PM value: " + agCurrent[0]);
+                    info.setCoValue("CO value: " + agCurrent[1]);
                 }
                 info.setSensor(currentSensor);
 
@@ -349,7 +356,6 @@ public class SensorMap
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult){}
-
 }
 
 
