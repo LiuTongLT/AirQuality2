@@ -50,7 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="20dp"
                     android:hint="SensorNode ID"
                     android:textSize="14dp" />
 
@@ -63,46 +63,14 @@
                     android:hint="Location"
                     android:textSize="14dp" />
 
-                <Spinner
-                    android:id="@+id/spinner1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown" />
 
-                <Spinner
-                    android:id="@+id/spinner2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown" />
-
-                <Spinner
-                    android:id="@+id/spinner3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown" />
-
-
-                <Spinner
-                    android:id="@+id/spinner4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown" />
 
                 <Button
                     android:id="@+id/add_sensor_info_add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/buttonstyles"
                     android:text="Add this sensor to the map!"
