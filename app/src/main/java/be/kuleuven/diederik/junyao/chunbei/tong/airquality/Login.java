@@ -3,6 +3,7 @@ package be.kuleuven.diederik.junyao.chunbei.tong.airquality;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -21,6 +22,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
+//    static {
+//        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+//    }
 
     private boolean correct;
     private Button login;

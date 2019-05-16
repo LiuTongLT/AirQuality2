@@ -24,12 +24,14 @@ public class CustomInfoWindow implements GoogleMap.InfoWindowAdapter {
         TextView location = view.findViewById(R.id.custom_marler_location);
         TextView coValue = view.findViewById(R.id.custom_marker_co_value);
         TextView pmValue = view.findViewById(R.id.custom_marker_pm_value);
+        TextView date = view.findViewById(R.id.custom_marker_date);
 
         InfoWindowData infoWindowData = (InfoWindowData) marker.getTag();
         try {
-        location.setText(infoWindowData.getLocation());
-        coValue.setText(infoWindowData.getCoValue());
+            location.setText(infoWindowData.getLocation());
+            coValue.setText(infoWindowData.getCoValue());
             pmValue.setText(infoWindowData.getPmValue());
+            date.setText(infoWindowData.getDate());
         } catch (NullPointerException e) {
         }
 

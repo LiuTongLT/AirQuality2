@@ -41,6 +41,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -73,8 +74,12 @@ public class SensorMap
     private Sensor sensorOfMarker;
     private User user;
     private Set<Measurement> currentV = new HashSet<>();
+
     private double[] gtCurrent = new double[2];
     private double[] agCurrent = new double[2];
+    private String gtDate;
+    private String agDate;
+
     private DrawerLayout drawerLayout;
     private LatLng cameraPosition;
 
@@ -110,7 +115,6 @@ public class SensorMap
             @Override
             public void onDrawerStateChanged(int newState) {}
         });
-
     }
 
     @Override
@@ -175,6 +179,8 @@ public class SensorMap
         Intent intent2 = new Intent (SensorMap.this, Report.class);
         intent2.putExtra("data", data);
         intent2.putExtra("user", user);
+        InfoWindowData infoWindowData=(InfoWindowData)marker.getTag();
+        sensorOfMarker = infoWindowData.getSensor();
         intent2.putExtra("sensor", sensorOfMarker);
         startActivity(intent2);
         finish();
@@ -233,6 +239,7 @@ public class SensorMap
 
     private void getCurrentValue(final String location){
         final String loc=location;
+        final Date[] dates = new Date[2];
         final double[] values=new double[2];
         String url = "https://a18ee5air2.studev.groept.be/query/readCurrent.php?location=" + location;
         RequestQueue queue = Volley.newRequestQueue(SensorMap.this);
@@ -251,23 +258,31 @@ public class SensorMap
                                 double currentPM = jobj.getDouble("valuePM");
                                 double currentCo=jobj.getDouble("valueCO");
                                 String day = jobj.getString("timeStamps");
-                                Date date = new SimpleDateFormat("yyyy-MM-dd").parse(day);
-                                Measurement m = new Measurement(currentCo,currentPM,date,loc);
+                                Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(day);
+                                Measurement m = new Measurement(currentCo,currentPM, date,loc);
                                 currentV.add(m);
                                 if(location.equals("groupt")){
                                     gtCurrent[0] = currentPM;
                                     gtCurrent[1] = currentCo;
+                                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                                    gtDate = dateFormat.format(date);
+                                    System.out.println("current date: " +gtDate);
                                 }
                                 else if(location.equals("agora")){
                                     agCurrent[0] = currentPM;
                                     agCurrent[1] = currentCo;
+                                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                                    agDate = dateFormat.format(date);
+                                    System.out.println("current date: " +agDate);
                                 }
                                 values[0]=currentPM;
                                 values[1]=currentCo;
+                                System.out.println("current date: " +day);
                             }
                             System.out.println("End of response!");
                             System.out.println("currentPM: "+values[0]);
                             System.out.println("currentCO: "+values[1]);
+
 
                         } catch (JSONException e) {
                             System.out.println(e);
@@ -314,9 +329,11 @@ public class SensorMap
                 if(currentSensor.getLocation().equals("groupt")){
                     info.setPmValue("PM value: " + gtCurrent[0]);
                     info.setCoValue("CO value: " + gtCurrent[1]);
+                    info.setDate("Last update time: "+gtDate);
                 }else if(currentSensor.getLocation().equals("agora")){
                     info.setPmValue("PM value: " + agCurrent[0]);
                     info.setCoValue("CO value: " + agCurrent[1]);
+                    info.setDate("Last update time: " + agDate);
                 }
                 info.setSensor(currentSensor);
 

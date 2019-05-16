@@ -38,14 +38,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.lang.*;
 
-public class Report
-
-        extends
-        AppCompatActivity
-        implements
-        NavigationView.OnNavigationItemSelectedListener
-
-{
+public class Report extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private Data data = new Data();
     private User user;
@@ -62,6 +55,7 @@ public class Report
         data=(Data) intent.getSerializableExtra("data");
         user = (User) intent.getSerializableExtra("user");
         sensor =(Sensor) intent.getSerializableExtra("sensor");
+        System.out.println("Location: " + sensor.getLocation());
         String location = (String) intent.getSerializableExtra("location");
         try{
             if(location!=null){
