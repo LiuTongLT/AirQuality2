@@ -62,11 +62,11 @@ public class AddSensorInfo extends AppCompatActivity implements View.OnClickList
         add = (Button) findViewById(R.id.add_sensor_info_add);
         add.setOnClickListener(this);
 
-        NavigationView navigationView1 = findViewById(R.id.add_sensor_map_to_map);
+        NavigationView navigationView1 = findViewById(R.id.add_sensor_info_nav_view);
         navigationView1.setNavigationItemSelectedListener(this);
 
-        NavigationView navigationView2 = findViewById(R.id.add_sensor_map_to_menu);
-        navigationView2.setNavigationItemSelectedListener(this);
+//        NavigationView navigationView2 = findViewById(R.id.add_sensor_map_to_menu);
+//        navigationView2.setNavigationItemSelectedListener(this);
 
 
     }
