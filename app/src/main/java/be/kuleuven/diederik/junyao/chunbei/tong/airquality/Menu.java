@@ -29,6 +29,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
     private CardView mapMenu, listMenu, userInfoMenu, signOutMenu;
     private User user;
     private Data data = new Data();
+    private Data timingData = new Data();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -51,6 +52,8 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
 
         getMeasurements("groupt");
         getMeasurements("agora");
+        getTimingMeasurements("groupt");
+        getTimingMeasurements("agora");
         getSensors();
 
     }
@@ -67,18 +70,21 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
                 intent = new Intent(this,UserInfo.class);
                 intent.putExtra("user",user);
                 intent.putExtra("data",data);
+                intent.putExtra("timingDate",timingData);
                 startActivity(intent);
                 break;
             case R.id.menu_map:
                 intent = new Intent(this, SensorMap.class);
                 intent.putExtra("user",user);
                 intent.putExtra("data",data);
+                intent.putExtra("timingDate",timingData);
                 startActivity(intent);
                 break;
             case R.id.menu_list:
                 intent = new Intent(this,Position.class);
                 intent.putExtra("user",user);
                 intent.putExtra("data",data);
+                intent.putExtra("timingDate",timingData);
                 startActivity(intent);
                 break;
             default: break;
@@ -101,7 +107,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
                     @Override
                     public void onResponse(String response) {
                         try {
-                            System.out.println("Into response!");
+                            System.out.println("Into response! measurement");
                             JSONArray jarr = new JSONArray(response);
                             for (int i = 0; i < jarr.length(); i++) {
                                 JSONObject jobj = jarr.getJSONObject(i);
@@ -111,7 +117,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
                                 Double co_value = jobj.getDouble("avg_CO");
 
                                 try{
-                                data.addMeasurement(new Measurement(co_value,pm_value,date,loc));}
+                                timingData.addMeasurement(new Measurement(co_value,pm_value,date,loc));}
                                 catch(AlreadyAddedException A){
                                     Toast.makeText(Menu.this,"Add measurement failed!",Toast.LENGTH_SHORT).show();
                                 }
@@ -120,7 +126,59 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
                                 System.out.println("PM: " + pm_value);
                                 System.out.println("CO: " + co_value);
                             }
-                            System.out.println("End of response!");
+                            System.out.println("End of response! measurement");
+
+                        } catch (JSONException e) {
+                            System.out.println(e);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Menu.this, "Error...", Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
+            }
+        });
+        queue.add(stringRequest);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void getTimingMeasurements(String location) {
+
+        final String loc=location;
+
+        String url = "https://studev.groept.be/api/a18ee5air2/readTwenty/"+location+"/"+0;
+        RequestQueue queue = Volley.newRequestQueue(Menu.this);
+
+        System.out.println("Get timing measurements starts");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            System.out.println("Into response! timing");
+                            JSONArray jarr = new JSONArray(response);
+                            for (int i = 0; i < jarr.length(); i++) {
+                                JSONObject jobj = jarr.getJSONObject(i);
+                                String time = jobj.getString("timeStamps");
+                                Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(time);
+                                Double pm_value = jobj.getDouble("valuePM");
+                                Double co_value = jobj.getDouble("valueCO");
+
+                                try{
+                                    data.addMeasurement(new Measurement(co_value,pm_value,date,loc));}
+                                catch(AlreadyAddedException A){
+                                    Toast.makeText(Menu.this,"Add measurement failed!",Toast.LENGTH_SHORT).show();
+                                }
+
+                                System.out.println("Date: " + date);
+                                System.out.println("PM: " + pm_value);
+                                System.out.println("CO: " + co_value);
+                            }
+                            System.out.println("End of response! timing");
 
                         } catch (JSONException e) {
                             System.out.println(e);
@@ -154,7 +212,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
                     @Override
                     public void onResponse(String response) {
                         try {
-                            System.out.println("Into response!");
+                            System.out.println("Into response! sensor");
                             JSONArray jarr = new JSONArray(response);
                             for (int i = 0; i < jarr.length(); i++) {
                                 JSONObject jobj = jarr.getJSONObject(i);
@@ -174,7 +232,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
                                 System.out.println("Ycoordinate: " + ycoordinate);
                                 System.out.println("Location: " + location);
                             }
-                            System.out.println("End of response!");
+                            System.out.println("End of response! sensor");
                         } catch (JSONException e) {
                             System.out.println(e);
                         }
@@ -188,4 +246,6 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
         });
         queue.add(stringRequest);
     }
+
+
 }

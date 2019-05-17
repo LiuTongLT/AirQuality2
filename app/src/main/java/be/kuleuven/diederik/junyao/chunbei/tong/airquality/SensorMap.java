@@ -70,6 +70,7 @@ public class SensorMap
     private static final int Request_User_Location_Code = 99;
     private ArrayList markers = new ArrayList<Marker>();
     private Data data;
+    private Data timingData;
     private Marker marker;
     private Sensor sensorOfMarker;
     private User user;
@@ -96,6 +97,7 @@ public class SensorMap
         Intent intent = getIntent();
         data = (Data) intent.getSerializableExtra("data");
         user = (User) intent.getSerializableExtra("user");
+        timingData = (Data) intent.getSerializableExtra("timingData");
 
         getCurrentValue("groupt");
         getCurrentValue("agora");
@@ -130,6 +132,7 @@ public class SensorMap
             Intent intent = new Intent(SensorMap.this, Menu.class);
             intent.putExtra("data", data);
             intent.putExtra("user", user);
+            intent.putExtra("timingData",timingData);
             startActivity(intent);
             finish();
         }
@@ -139,6 +142,7 @@ public class SensorMap
             intent.putExtra("longitude", cameraPosition.longitude);
             intent.putExtra("data", data);
             intent.putExtra("user", user);
+            intent.putExtra("timingData",timingData);
             startActivity(intent);
             finish();
             //Toast.makeText(SensorMap.this,"Click on the map to place a new sensor node!",Toast.LENGTH_SHORT).show();
@@ -176,9 +180,10 @@ public class SensorMap
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        Intent intent2 = new Intent (SensorMap.this, Report.class);
+        Intent intent2 = new Intent (SensorMap.this, NewReport.class);
         intent2.putExtra("data", data);
         intent2.putExtra("user", user);
+        intent2.putExtra("timingData", timingData);
         InfoWindowData infoWindowData=(InfoWindowData)marker.getTag();
         sensorOfMarker = infoWindowData.getSensor();
         intent2.putExtra("sensor", sensorOfMarker);
@@ -300,6 +305,8 @@ public class SensorMap
         queue.add(stringRequest);
 
     }
+
+
 
     private void addSensors(){
 

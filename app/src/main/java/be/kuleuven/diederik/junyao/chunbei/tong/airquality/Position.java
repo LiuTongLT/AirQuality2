@@ -36,6 +36,7 @@ import java.util.Iterator;
 public class Position extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     private Data data;
+    private Data timingData;
     private User user;
     private Sensor sensor;
     private ArrayList sensors;
@@ -53,6 +54,7 @@ public class Position extends AppCompatActivity implements View.OnClickListener,
         Intent intent = getIntent();
         data = (Data) intent.getSerializableExtra("data");
         user = (User) intent.getSerializableExtra("user");
+        timingData = (Data) intent.getSerializableExtra("timingData");
 
         sensors = data.getSensors();
         locations = new ArrayList<String>();
@@ -78,6 +80,7 @@ public class Position extends AppCompatActivity implements View.OnClickListener,
                 Intent intent = new Intent(this,Menu.class);
                 intent.putExtra("data", data);
                 intent.putExtra("user", user);
+                intent.putExtra("timingData", timingData);
                 startActivity(intent);
                 finish();
                 break;
@@ -90,10 +93,11 @@ public class Position extends AppCompatActivity implements View.OnClickListener,
 
         sensor=(Sensor)sensors.get(i);
 
-        Intent intent = new Intent(this,Report.class);
+        Intent intent = new Intent(this,NewReport.class);
         intent.putExtra("data",data);
         intent.putExtra("user",user);
         intent.putExtra("sensor",sensor);
+        intent.putExtra("timingData",timingData);
         startActivity(intent);
         finish();
 

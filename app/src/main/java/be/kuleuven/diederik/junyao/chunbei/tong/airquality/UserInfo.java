@@ -10,6 +10,7 @@ public class UserInfo extends AppCompatActivity implements View.OnClickListener 
 
     private User user;
     private Data data = new Data();
+    private Data timingData = new Data();
 
     private TextView firstname;
     private TextView lastName;
@@ -24,6 +25,7 @@ public class UserInfo extends AppCompatActivity implements View.OnClickListener 
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("user");
         data = (Data) intent.getSerializableExtra("data");
+        timingData = (Data) intent.getSerializableExtra("timingData");
         String lName = user.getLastName();
         String fName = user.getFirstName();
         String eM = user.getMailAddress();
@@ -48,6 +50,7 @@ public class UserInfo extends AppCompatActivity implements View.OnClickListener 
                 intent = new Intent(UserInfo.this,Menu.class);
                 intent.putExtra("user",user);
                 intent.putExtra("data",data);
+                intent.putExtra("timingData",timingData);
                 startActivity(intent);
         }
     }
