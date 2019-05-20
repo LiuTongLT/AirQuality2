@@ -30,6 +30,8 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
     private User user;
     private Data data = new Data();
     private Data timingData = new Data();
+    private Measurement currentGT = new Measurement(0,0,null,"groupt");
+    private Measurement currentAG = new Measurement(0,0,null,"agora");
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -39,6 +41,10 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
 
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("user");
+        //data = (Data) intent.getSerializableExtra("data");
+        //timingData = (Data) intent.getSerializableExtra("timingData");
+        currentGT = (Measurement)intent.getSerializableExtra("currentGT");
+        currentAG = (Measurement) intent.getSerializableExtra("currentAG");
 
         mapMenu = findViewById(R.id.menu_map);
         listMenu = findViewById(R.id.menu_list);
@@ -71,6 +77,8 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
                 intent.putExtra("user",user);
                 intent.putExtra("data",data);
                 intent.putExtra("timingDate",timingData);
+                intent.putExtra("currentGT",currentGT);
+                intent.putExtra("currentAG",currentAG);
                 startActivity(intent);
                 break;
             case R.id.menu_map:
@@ -78,6 +86,8 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
                 intent.putExtra("user",user);
                 intent.putExtra("data",data);
                 intent.putExtra("timingDate",timingData);
+                intent.putExtra("currentGT",currentGT);
+                intent.putExtra("currentAG",currentAG);
                 startActivity(intent);
                 break;
             case R.id.menu_list:
@@ -85,6 +95,8 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
                 intent.putExtra("user",user);
                 intent.putExtra("data",data);
                 intent.putExtra("timingDate",timingData);
+                intent.putExtra("currentGT",currentGT);
+                intent.putExtra("currentAG",currentAG);
                 startActivity(intent);
                 break;
             default: break;
@@ -117,7 +129,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
                                 Double co_value = jobj.getDouble("avg_CO");
 
                                 try{
-                                timingData.addMeasurement(new Measurement(co_value,pm_value,date,loc));}
+                                data.addMeasurement(new Measurement(co_value,pm_value,date,loc));}
                                 catch(AlreadyAddedException A){
                                     Toast.makeText(Menu.this,"Add measurement failed!",Toast.LENGTH_SHORT).show();
                                 }
@@ -149,7 +161,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
 
         final String loc=location;
 
-        String url = "https://studev.groept.be/api/a18ee5air2/readTwenty/"+location+"/"+0;
+        String url = "https://a18ee5air2.studev.groept.be/query/readTwenty.php?location="+location;
         RequestQueue queue = Volley.newRequestQueue(Menu.this);
 
         System.out.println("Get timing measurements starts");
@@ -169,7 +181,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
                                 Double co_value = jobj.getDouble("valueCO");
 
                                 try{
-                                    data.addMeasurement(new Measurement(co_value,pm_value,date,loc));}
+                                    timingData.addMeasurement(new Measurement(co_value,pm_value,date,loc));}
                                 catch(AlreadyAddedException A){
                                     Toast.makeText(Menu.this,"Add measurement failed!",Toast.LENGTH_SHORT).show();
                                 }

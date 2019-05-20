@@ -75,7 +75,7 @@ public class AddSensorInfo extends AppCompatActivity implements View.OnClickList
         builder = new AlertDialog.Builder(AddSensorInfo.this);
         final String id = ID.getText().toString();
         final String location = Location.getText().toString();
-        String serve_URL = "https://studev.groept.be/api/a18ee5air2/addSensorNode/"+id+"/"+location+"/"+latitude+"/"+longitude+"/"+0;
+        String serve_URL = "https://a18ee5air2.studev.groept.be/query/insertSensorNode.php?idSensorNode=" + id + "&location=" + location + "&xCo=" + latitude + "&yCo=" + longitude;
 
 
         RequestQueue queue2 = Volley.newRequestQueue(this);

@@ -36,7 +36,10 @@ public class AddSensorMap
     private Button nextStep;
     private DrawerLayout drawerLayout;
     private Data data;
+    private Data timingData;
     private User user;
+    private Measurement currentGT;
+    private Measurement currentAG;
     private LatLng sensorPosition;
 
     @Override
@@ -60,6 +63,9 @@ public class AddSensorMap
         double lng = (double) intent.getSerializableExtra("longitude");
         user = (User) intent.getSerializableExtra("user");
         data = (Data) intent.getSerializableExtra("data");
+        timingData = (Data) intent.getSerializableExtra("timingData");
+        currentGT = (Measurement)intent.getSerializableExtra("currentGT");
+        currentAG = (Measurement) intent.getSerializableExtra("currentAG");
         cameraPostition = new LatLng(lat, lng);
 
         drawerLayout = findViewById(R.id.add_sensor_map_drawer_layout);
@@ -126,6 +132,9 @@ public class AddSensorMap
             Intent intent = new Intent(AddSensorMap.this, Menu.class);
             intent.putExtra("data", data);
             intent.putExtra("user", user);
+            intent.putExtra("currentGT",currentGT);
+            intent.putExtra("currentAG",currentAG);
+            intent.putExtra("timingData",timingData);
             startActivity(intent);
             finish();
 
@@ -133,6 +142,9 @@ public class AddSensorMap
             Intent intent = new Intent(AddSensorMap.this, SensorMap.class);
             intent.putExtra("data", data);
             intent.putExtra("user", user);
+            intent.putExtra("currentGT",currentGT);
+            intent.putExtra("currentAG",currentAG);
+            intent.putExtra("timingData",timingData);
             startActivity(intent);
             finish();
         }

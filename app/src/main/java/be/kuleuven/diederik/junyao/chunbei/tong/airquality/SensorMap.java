@@ -76,6 +76,9 @@ public class SensorMap
     private User user;
     private Set<Measurement> currentV = new HashSet<>();
 
+    private Measurement currentGT = new Measurement(0,0,null,"groupt");
+    private Measurement currentAG;
+
     private double[] gtCurrent = new double[2];
     private double[] agCurrent = new double[2];
     private String gtDate;
@@ -133,6 +136,8 @@ public class SensorMap
             intent.putExtra("data", data);
             intent.putExtra("user", user);
             intent.putExtra("timingData",timingData);
+            intent.putExtra("currentGT",currentGT);
+            intent.putExtra("currentAG",currentAG);
             startActivity(intent);
             finish();
         }
@@ -143,6 +148,8 @@ public class SensorMap
             intent.putExtra("data", data);
             intent.putExtra("user", user);
             intent.putExtra("timingData",timingData);
+            intent.putExtra("currentGT",currentGT);
+            intent.putExtra("currentAG",currentAG);
             startActivity(intent);
             finish();
             //Toast.makeText(SensorMap.this,"Click on the map to place a new sensor node!",Toast.LENGTH_SHORT).show();
@@ -272,6 +279,8 @@ public class SensorMap
                                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                                     gtDate = dateFormat.format(date);
                                     System.out.println("current date: " +gtDate);
+
+                                    currentGT = m;
                                 }
                                 else if(location.equals("agora")){
                                     agCurrent[0] = currentPM;
@@ -279,6 +288,8 @@ public class SensorMap
                                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                                     agDate = dateFormat.format(date);
                                     System.out.println("current date: " +agDate);
+
+                                    currentAG = m;
                                 }
                                 values[0]=currentPM;
                                 values[1]=currentCo;
@@ -334,8 +345,10 @@ public class SensorMap
 
                 //next part needs improvement -> so it is applicable to a random amount of sensors
                 if(currentSensor.getLocation().equals("groupt")){
-                    info.setPmValue("PM value: " + gtCurrent[0]);
-                    info.setCoValue("CO value: " + gtCurrent[1]);
+                    info.setPmValue("PM value: " + currentGT.getPmValue());
+                    info.setCoValue("CO value: " + currentGT.getCoValue());
+//                    info.setPmValue("PM value: " + gtCurrent[0]);
+//                    info.setCoValue("CO value: " + gtCurrent[1]);
                     info.setDate("Last update time: "+gtDate);
                 }else if(currentSensor.getLocation().equals("agora")){
                     info.setPmValue("PM value: " + agCurrent[0]);

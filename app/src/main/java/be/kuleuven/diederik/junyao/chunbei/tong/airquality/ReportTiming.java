@@ -43,7 +43,7 @@ public class ReportTiming extends Fragment {
         view = inflater.inflate(R.layout.fragment_report_timing,container,false);
 
         Intent intent = getActivity().getIntent();
-        timingData=(Data) intent.getSerializableExtra("data");
+        timingData=(Data) intent.getSerializableExtra("timingData");
         user = (User) intent.getSerializableExtra("user");
         sensor =(Sensor) intent.getSerializableExtra("sensor");
         System.out.println("Location: " + sensor.getLocation());
