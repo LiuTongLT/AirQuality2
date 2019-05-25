@@ -75,7 +75,7 @@ public class AddSensorInfo extends AppCompatActivity implements View.OnClickList
         builder = new AlertDialog.Builder(AddSensorInfo.this);
         final String id = ID.getText().toString();
         final String location = Location.getText().toString();
-        String serve_URL = "https://a18ee5air2.studev.groept.be/query/insertSensorNode.php?idSensorNode=" + id + "&location=" + location + "&xCo=" + latitude + "&yCo=" + longitude;
+        String serve_URL = "https://a18ee5air2.studev.groept.be/query/insertSensorNode.php?id=" + id + "&location=" + location + "&xco=" + latitude + "&yco=" + longitude;
 
 
         RequestQueue queue2 = Volley.newRequestQueue(this);
@@ -91,7 +91,6 @@ public class AddSensorInfo extends AppCompatActivity implements View.OnClickList
                             public void onClick(DialogInterface dialog, int which) {
                                 ID.setText("");
                                 Location.setText("");
-
                             }
                         });
                         AlertDialog alertDialog = builder.create();

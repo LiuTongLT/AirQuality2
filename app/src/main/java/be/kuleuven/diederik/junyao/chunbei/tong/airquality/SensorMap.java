@@ -78,11 +78,13 @@ public class SensorMap
 
     private Measurement currentGT = new Measurement(0,0,null,"groupt");
     private Measurement currentAG;
+    private Measurement currentTest = new Measurement(0,0,null,"test");
 
     private double[] gtCurrent = new double[2];
     private double[] agCurrent = new double[2];
     private String gtDate;
     private String agDate;
+    private String testDate;
 
     private DrawerLayout drawerLayout;
     private LatLng cameraPosition;
@@ -104,6 +106,7 @@ public class SensorMap
 
         getCurrentValue("groupt");
         getCurrentValue("agora");
+        getCurrentValue("test");
 
         drawerLayout = findViewById(R.id.sensor_map_drawer_layout);
 
@@ -128,6 +131,7 @@ public class SensorMap
         if (id == R.id.sensor_map_refresh) {
             getCurrentValue("groupt");
             getCurrentValue("agora");
+            getCurrentValue("test");
             System.out.println("gt PM: "+gtCurrent[0]+" gt CO: "+gtCurrent[1]);
             addSensors();
             Toast.makeText(SensorMap.this,"Successfully refreshed!",Toast.LENGTH_SHORT).show();
@@ -291,6 +295,11 @@ public class SensorMap
 
                                     currentAG = m;
                                 }
+                                else if(location.equals("test")){
+                                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                                    testDate = dateFormat.format(date);
+                                    currentTest = m;
+                                }
                                 values[0]=currentPM;
                                 values[1]=currentCo;
                                 System.out.println("current date: " +day);
@@ -347,13 +356,79 @@ public class SensorMap
                 if(currentSensor.getLocation().equals("groupt")){
                     info.setPmValue("PM value: " + currentGT.getPmValue());
                     info.setCoValue("CO value: " + currentGT.getCoValue());
+
+                    if(currentGT.getPmValue()<=30 && currentGT.getCoValue()<=1){
+                        markerOptions.position(latlng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                    }
+                    else if((currentGT.getPmValue()>30 && currentGT.getPmValue()<=60) || (currentGT.getCoValue()>1 && currentGT.getCoValue()<=2)){
+                        markerOptions.position(latlng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                    }
+                    else if((currentGT.getPmValue()>60 && currentGT.getPmValue()<=90) || (currentGT.getCoValue()>2 && currentGT.getCoValue()<=10)){
+                        markerOptions.position(latlng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+                    }
+                    else if((currentGT.getPmValue()>90 && currentGT.getPmValue()<=120) || (currentGT.getCoValue()>10 && currentGT.getCoValue()<=17)){
+                        markerOptions.position(latlng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                    }
+                    else if((currentGT.getPmValue()>120 && currentGT.getPmValue()<=250) || (currentGT.getCoValue()>17 && currentGT.getCoValue()<=34)){
+                        markerOptions.position(latlng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                    }
+                    else if(currentGT.getPmValue()>250 || currentGT.getCoValue()>34){
+                        markerOptions.position(latlng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+                    }
 //                    info.setPmValue("PM value: " + gtCurrent[0]);
 //                    info.setCoValue("CO value: " + gtCurrent[1]);
                     info.setDate("Last update time: "+gtDate);
                 }else if(currentSensor.getLocation().equals("agora")){
                     info.setPmValue("PM value: " + agCurrent[0]);
                     info.setCoValue("CO value: " + agCurrent[1]);
+
+
+                    if(currentAG.getPmValue()<=30 && currentAG.getCoValue()<=1){
+                        markerOptions.position(latlng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                    }
+                    else if((currentAG.getPmValue()>30 && currentAG.getPmValue()<=60) || (currentAG.getCoValue()>1 && currentAG.getCoValue()<=2)){
+                        markerOptions.position(latlng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                    }
+                    else if((currentAG.getPmValue()>60 && currentAG.getPmValue()<=90) || (currentAG.getCoValue()>2 && currentAG.getCoValue()<=10)){
+                        markerOptions.position(latlng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+                    }
+                    else if((currentAG.getPmValue()>90 && currentAG.getPmValue()<=120) || (currentAG.getCoValue()>10 && currentAG.getCoValue()<=17)){
+                        markerOptions.position(latlng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                    }
+                    else if((currentAG.getPmValue()>120 && currentAG.getPmValue()<=250) || (currentAG.getCoValue()>17 && currentAG.getCoValue()<=34)){
+                        markerOptions.position(latlng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                    }
+                    else if(currentAG.getPmValue()>250 || currentAG.getCoValue()>34){
+                        markerOptions.position(latlng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+                    }
+
                     info.setDate("Last update time: " + agDate);
+                }
+                else if(currentSensor.getLocation().equals("test")){
+                    info.setPmValue("PM value: " + currentTest.getPmValue());
+                    info.setCoValue("CO value: " + currentTest.getCoValue());
+
+                    if(currentTest.getPmValue()<=30 && currentTest.getCoValue()<=1){
+                        markerOptions.position(latlng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                    }
+                    else if((currentTest.getPmValue()>30 && currentTest.getPmValue()<=60) || (currentTest.getCoValue()>1 && currentTest.getCoValue()<=2)){
+                        markerOptions.position(latlng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                    }
+                    else if((currentTest.getPmValue()>60 && currentTest.getPmValue()<=90) || (currentTest.getCoValue()>2 && currentTest.getCoValue()<=10)){
+                        markerOptions.position(latlng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+                    }
+                    else if((currentTest.getPmValue()>90 && currentTest.getPmValue()<=120) || (currentTest.getCoValue()>10 && currentTest.getCoValue()<=17)){
+                        markerOptions.position(latlng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                    }
+                    else if((currentTest.getPmValue()>120 && currentTest.getPmValue()<=250) || (currentTest.getCoValue()>17 && currentTest.getCoValue()<=34)){
+                        markerOptions.position(latlng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                    }
+                    else if(currentTest.getPmValue()>250 || currentTest.getCoValue()>34){
+                        markerOptions.position(latlng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+                    }
+//                    info.setPmValue("PM value: " + gtCurrent[0]);
+//                    info.setCoValue("CO value: " + gtCurrent[1]);
+                    info.setDate("Last update time: "+testDate);
                 }
                 info.setSensor(currentSensor);
 

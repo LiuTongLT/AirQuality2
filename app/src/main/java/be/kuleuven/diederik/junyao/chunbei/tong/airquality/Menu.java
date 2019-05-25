@@ -76,7 +76,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
                 intent = new Intent(this,UserInfo.class);
                 intent.putExtra("user",user);
                 intent.putExtra("data",data);
-                intent.putExtra("timingDate",timingData);
+                intent.putExtra("timingData",timingData);
                 intent.putExtra("currentGT",currentGT);
                 intent.putExtra("currentAG",currentAG);
                 startActivity(intent);
@@ -85,7 +85,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
                 intent = new Intent(this, SensorMap.class);
                 intent.putExtra("user",user);
                 intent.putExtra("data",data);
-                intent.putExtra("timingDate",timingData);
+                intent.putExtra("timingData",timingData);
                 intent.putExtra("currentGT",currentGT);
                 intent.putExtra("currentAG",currentAG);
                 startActivity(intent);
@@ -94,7 +94,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
                 intent = new Intent(this,Position.class);
                 intent.putExtra("user",user);
                 intent.putExtra("data",data);
-                intent.putExtra("timingDate",timingData);
+                intent.putExtra("timingData",timingData);
                 intent.putExtra("currentGT",currentGT);
                 intent.putExtra("currentAG",currentAG);
                 startActivity(intent);
