@@ -77,7 +77,7 @@ public class SensorMap
     private Set<Measurement> currentV = new HashSet<>();
 
     private Measurement currentGT = new Measurement(0,0,null,"groupt");
-    private Measurement currentAG;
+    private Measurement currentAG = new Measurement(0,0,null,"agora");
     private Measurement currentTest = new Measurement(0,0,null,"test");
 
     private double[] gtCurrent = new double[2];
