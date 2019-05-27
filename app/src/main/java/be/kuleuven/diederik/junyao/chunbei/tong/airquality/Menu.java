@@ -46,6 +46,8 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
         currentGT = (Measurement)intent.getSerializableExtra("currentGT");
         currentAG = (Measurement) intent.getSerializableExtra("currentAG");
 
+        System.out.println("user first: "+ user.getFirstName());
+
         mapMenu = findViewById(R.id.menu_map);
         listMenu = findViewById(R.id.menu_list);
         userInfoMenu = findViewById(R.id.menu_userinfo);

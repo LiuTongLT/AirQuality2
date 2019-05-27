@@ -104,6 +104,8 @@ public class SensorMap
         user = (User) intent.getSerializableExtra("user");
         timingData = (Data) intent.getSerializableExtra("timingData");
 
+        System.out.println("user first: "+ user.getFirstName());
+
         getCurrentValue("groupt");
         getCurrentValue("agora");
         getCurrentValue("test");

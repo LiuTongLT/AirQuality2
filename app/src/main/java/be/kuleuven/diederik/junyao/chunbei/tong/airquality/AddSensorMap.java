@@ -68,6 +68,8 @@ public class AddSensorMap
         currentAG = (Measurement) intent.getSerializableExtra("currentAG");
         cameraPostition = new LatLng(lat, lng);
 
+        System.out.println("user first: "+ user.getFirstName());
+
         drawerLayout = findViewById(R.id.add_sensor_map_drawer_layout);
 
         NavigationView navigationView = findViewById(R.id.add_sensor_map_nav_view);
