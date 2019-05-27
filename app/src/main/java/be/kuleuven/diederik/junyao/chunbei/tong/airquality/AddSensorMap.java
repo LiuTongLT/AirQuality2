@@ -70,7 +70,7 @@ public class AddSensorMap
 
         System.out.println("user first: "+ user.getFirstName());
 
-        drawerLayout = findViewById(R.id.add_sensor_map_drawer_layout);
+        drawerLayout = findViewById(R.id.add_sensor_map_drawer_layout_map);
 
         NavigationView navigationView = findViewById(R.id.add_sensor_map_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -120,6 +120,11 @@ public class AddSensorMap
                     Intent intent = new Intent(AddSensorMap.this, AddSensorInfo.class);
                     intent.putExtra("latitude", sensorPosition.latitude);
                     intent.putExtra("longitude", sensorPosition.longitude);
+                    intent.putExtra("data", data);
+                    intent.putExtra("user", user);
+                    intent.putExtra("currentGT",currentGT);
+                    intent.putExtra("currentAG",currentAG);
+                    intent.putExtra("timingData",timingData);
                     startActivity(intent);
                     finish();
                 }
@@ -131,7 +136,7 @@ public class AddSensorMap
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
         if (id == R.id.add_sensor_map_to_map) {
-            Intent intent = new Intent(AddSensorMap.this, Menu.class);
+            Intent intent = new Intent(AddSensorMap.this, SensorMap.class);
             intent.putExtra("data", data);
             intent.putExtra("user", user);
             intent.putExtra("currentGT",currentGT);
@@ -141,7 +146,7 @@ public class AddSensorMap
             finish();
 
         } else if (id == R.id.add_sensor_map_to_menu) {
-            Intent intent = new Intent(AddSensorMap.this, SensorMap.class);
+            Intent intent = new Intent(AddSensorMap.this, Menu.class);
             intent.putExtra("data", data);
             intent.putExtra("user", user);
             intent.putExtra("currentGT",currentGT);
@@ -151,7 +156,6 @@ public class AddSensorMap
             finish();
         }
         drawerLayout.closeDrawers();
-
         return true;
     }
 }

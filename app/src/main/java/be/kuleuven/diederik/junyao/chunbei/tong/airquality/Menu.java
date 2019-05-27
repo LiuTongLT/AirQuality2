@@ -27,7 +27,7 @@ import java.util.Date;
 public class Menu extends AppCompatActivity implements View.OnClickListener{
 
     private CardView mapMenu, listMenu, userInfoMenu, signOutMenu;
-    private User user;
+    private User user = new User();
     private Data data = new Data();
     private Data timingData = new Data();
     private Measurement currentGT = new Measurement(0,0,null,"groupt");

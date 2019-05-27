@@ -1,6 +1,7 @@
 package be.kuleuven.diederik.junyao.chunbei.tong.airquality;
 
 import android.app.AlertDialog;
+import android.app.Service;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -58,6 +59,8 @@ public class AddSensorInfo extends AppCompatActivity implements View.OnClickList
         currentGT = (Measurement)intent.getSerializableExtra("currentGT");
         currentAG = (Measurement) intent.getSerializableExtra("currentAG");
 
+        System.out.println("user first: "+ user.getFirstName());
+
         lat = findViewById(R.id.add_sensor_info_latitude);
         lng = findViewById(R.id.add_sensor_info_longitude);
 
@@ -71,7 +74,7 @@ public class AddSensorInfo extends AppCompatActivity implements View.OnClickList
         add = (Button) findViewById(R.id.add_sensor_info_add);
         add.setOnClickListener(this);
 
-        drawerLayout = findViewById(R.id.add_sensor_map_drawer_layout);
+        drawerLayout = findViewById(R.id.add_sensor_map_drawer_layout_info);
 
         NavigationView navigationView1 = findViewById(R.id.add_sensor_info_nav_view);
         navigationView1.setNavigationItemSelectedListener(this);

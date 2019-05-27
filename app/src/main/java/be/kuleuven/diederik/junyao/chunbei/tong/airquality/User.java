@@ -16,6 +16,8 @@ public class User implements Serializable{
         this.password=password;
     }
 
+    public User(){}
+
     public User(String email){
         this.mailAddress = email;
     }
